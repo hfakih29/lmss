@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    
     <div class="wrapper" style="background-image : url('images/bg-registration-form-1.jpg');">
         <div class="inner">
             <div class="image-holder">
@@ -56,9 +57,18 @@
                                 </button>
                             </div>
                         </div>
+                        @if(Session::has('global'))
+
+				<div class="alert alert-success">
+					
+					{{ Session::get('global') }}
+				</div>
+
+@endif
             </form>
         </div>
     </div>
+    
     
     
 </body>
