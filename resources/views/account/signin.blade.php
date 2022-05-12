@@ -75,6 +75,7 @@
             </button>
           </div>
         </div>
+        @include('account.message')
 		<div class="row" style="display: none;">
 			<div class="module span12">
 				<div class="module-body">
