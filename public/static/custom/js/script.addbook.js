@@ -74,6 +74,10 @@ $(document).on("click","#addbooks",function(){
 
         title = f$('input[data-form-field~=title]').val();
         author = f$('input[data-form-field~=author]').val();
+        ISBN = f$('input[data-form-field~=ISBN]').val();
+        publisher = f$('input[data-form-field~=publisher]').val();
+        year = parseInt(f$('input[data-form-field~=year]').val());
+        edition = f$('input[data-form-field~=edition]').val();
         description = f$('textarea[data-form-field~=description]').val();
         category_id = f$('select[data-form-field~=category]').val();
         number = parseInt(f$('input[data-form-field~=number]').val());
@@ -90,8 +94,8 @@ $(document).on("click","#addbooks",function(){
             $.ajax({
                 type : 'POST',
                 data : {
-                   title:title, author:author, description:description,
-                    number:number, category_id : category_id, _token:_token,
+                   title:title, author:author, ISBN:ISBN, publisher:publisher, year:year
+                    , edition:edition    , description:description  ,   number:number, category_id : category_id, _token:_token,
                     auth_user:auth_user
                 },
                 url : '/books',
@@ -121,6 +125,10 @@ $(document).on("click","#addbooks",function(){
 function clearform(){
     $('#title').val('');
     $('#author').val('');
+    $('#ISBN').val('');
+    $('#publisher').val('');
+    $('#year').val('');
+    $('#edition').val('');
     $('#description').val('');
     $('#number').val('');
     $('#category').val('');

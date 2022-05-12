@@ -32,7 +32,7 @@ class BooksController extends Controller
 	public function index()
 	{
 
-		$book_list = Books::select('book_id','title','ISBN','author','description','book_categories.category')
+		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','description','book_categories.category')
 		->join('book_categories', 'book_categories.id', '=', 'books.category_id')
 			->orderBy('book_id')->get();
 		// dd($book_list);
@@ -88,6 +88,10 @@ class BooksController extends Controller
 			$book_title = Books::create([
 				'title'			=> $books['title'],
 				'author'		=> $books['author'],
+				'ISBN'			=> $books['ISBN'],
+				'publisher'		=> $books['publisher'],
+				'year'			=> $books['year'],
+				'edition'		=> $books['edition'],
 				'description' 	=> $books['description'],
 				'category_id'	=> $books['category_id'],
 				'added_by'		=> $user_id
@@ -145,7 +149,7 @@ class BooksController extends Controller
 	 */
 	public function show($string)
 	{
-		$book_list = Books::select('book_id','title','author','description','book_categories.category')
+		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','description','book_categories.category')
 		->join('book_categories', 'book_categories.id', '=', 'books.category_id')
 			->where('title', 'like', '%' . $string . '%')
 			->orWhere('author', 'like', '%' . $string . '%')
@@ -277,7 +281,7 @@ class BooksController extends Controller
 	
 	public function BookByCategory($cat_id)
 	{
-		$book_list = Books::select('book_id','title','author','description','book_categories.category')
+		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','description','book_categories.category')
 		->join('book_categories', 'book_categories.id', '=', 'books.category_id')
 			->where('category_id', $cat_id)->orderBy('book_id');
 

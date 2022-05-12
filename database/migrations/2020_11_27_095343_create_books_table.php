@@ -18,8 +18,8 @@ class CreateBooksTable extends Migration
             $table->string('title', 1000);
             $table->string('ISBN');
             $table->string('author', 1000);
-            $table->string('edition');
             $table->string('publisher');
+            $table->string('edition');
             $table->integer('year')->unsigned();
             $table->text('description');
             $table->integer('category_id')->unsigned();
