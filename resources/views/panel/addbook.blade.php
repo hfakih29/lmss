@@ -29,7 +29,28 @@
                 <div class="control-group">
                     <label class="control-label">ISBN</label>
                     <div class="controls">
-                        <input type="text" id="author" data-form-field="author" placeholder="Enter the book ISBN here..." class="span8">
+                        <input type="text" id="ISBN" data-form-field="ISBN" placeholder="Enter the book ISBN here..." class="span8">
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Publisher</label>
+                    <div class="controls">
+                        <input type="text" id="publisher" data-form-field="publisher" placeholder="Enter the book Publisher here..." class="span8">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Year</label>
+                    <div class="controls">
+                        <input type="number" id="year" data-form-field="year" placeholder="Enter the book Year here..." class="span8">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Edition</label>
+                    <div class="controls">
+                        <input type="text" id="edition" data-form-field="edition" placeholder="Enter the book Edition here..." class="span8">
                     </div>
                 </div>
 
