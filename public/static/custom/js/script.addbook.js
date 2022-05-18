@@ -1,6 +1,6 @@
 function loadResults(){
 
-    var url =  "/books?category_id=" + $('#category_fill').val();
+    var url =  "/books?callNumber=" + $('#callNumber_fill').val();
     // alert(url);
     var table = $('#all-books');
     
@@ -12,7 +12,7 @@ function loadResults(){
         success : function(data){
             console.log(data);
             if($.isEmptyObject(data)){
-                table.html('<tr><td colspan="99">No Books in this category</td></tr>');
+                table.html('<tr><td colspan="99">No Books with this call Number</td></tr>');
             } else {
                 table.html('');
                 for (var book in data) {
@@ -31,9 +31,9 @@ function loadResults(){
 
 $(document).ready(function(){
 
-    $("#category_fill").change(function(){
+    $("#callNumber_fill").change(function(){
 
-        var url =  "/bookBycategory/" + $('#category_fill').val();
+        var url =  "/bookBycallnumber/" + $('#callNumber_fill').val();
         // alert(url);
         var table = $('#all-books');
         
@@ -44,14 +44,17 @@ $(document).ready(function(){
             url : url,
             success : function(data){
                 console.log(data);
+                
                 if($.isEmptyObject(data)){
-                    table.html('<tr><td colspan="99">No Books in this category</td></tr>');
-                } else {
+                    table.html('<tr><td colspan="99">No Books with this call number</td></tr>');
+                }
+                 else {
                     table.html('');
                     for (var book in data) {
                         table.append(default_tpl(data[book]));
                     }
                 }
+                
             },
             beforeSend : function(){
                 table.css({'opacity' : 0.4});
@@ -79,7 +82,7 @@ $(document).on("click","#addbooks",function(){
         year = parseInt(f$('input[data-form-field~=year]').val());
         edition = f$('input[data-form-field~=edition]').val();
         description = f$('textarea[data-form-field~=description]').val();
-        category_id = f$('select[data-form-field~=category]').val();
+        callNumber = f$('select[data-form-field~=callNumber]').val();
         number = parseInt(f$('input[data-form-field~=number]').val());
         auth_user = f$('input[data-form-field~=auth_user]').val();
         _token = f$('input[data-form-field~=token]').val();
@@ -95,7 +98,7 @@ $(document).on("click","#addbooks",function(){
                 type : 'POST',
                 data : {
                    title:title, author:author, ISBN:ISBN, publisher:publisher, year:year
-                    , edition:edition    , description:description  ,   number:number, category_id : category_id, _token:_token,
+                    , edition:edition    , description:description  ,   number:number, callNumber : callNumber, _token:_token,
                     auth_user:auth_user
                 },
                 url : '/books',
@@ -131,5 +134,5 @@ function clearform(){
     $('#edition').val('');
     $('#description').val('');
     $('#number').val('');
-    $('#category').val('');
+    $('#callNumber').val('');
 }

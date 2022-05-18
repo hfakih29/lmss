@@ -9,7 +9,7 @@ use App\Models\Branch;
 use App\Models\Student;
 use App\Models\Categories;
 use Illuminate\Http\Request;
-use App\Models\BookCategories;
+use App\Models\BookCallNumbers;
 use App\Models\StudentCategories;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +20,7 @@ class BooksController extends Controller
 {
     public function __construct(){
 
-		$this->filter_params = array('category_id');
+		$this->filter_params = array('callNumber');
 
 	}
 
@@ -32,8 +32,8 @@ class BooksController extends Controller
 	public function index()
 	{
 
-		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','description','book_categories.category')
-		->join('book_categories', 'book_categories.id', '=', 'books.category_id')
+		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','description','book_call_Numbers.callNumber')
+		->join('book_call_Numbers', 'book_call_Numbers.id', '=', 'books.callNumber')
 			->orderBy('book_id')->get();
 		// dd($book_list);
 		// $this->filterQuery($book_list);
@@ -93,7 +93,7 @@ class BooksController extends Controller
 				'year'			=> $books['year'],
 				'edition'		=> $books['edition'],
 				'description' 	=> $books['description'],
-				'category_id'	=> $books['category_id'],
+				'callNumber'	=> $books['callNumber'],
 				'added_by'		=> $user_id
 			]);
 			// dd($book_title);
@@ -127,11 +127,11 @@ class BooksController extends Controller
 	}
 
 
-	public function BookCategoryStore(Request $request)
+	public function BookCallNumberStore(Request $request)
 	{
-		$bookcategory = BookCategories::create($request->all());
+		$bookcallnumber = BookCallNumbers::create($request->all());
 		
-		if (!$bookcategory) {
+		if (!$bookcallnumber) {
 
 			return 'Book Category fail to save!';
 		}else {
@@ -149,8 +149,8 @@ class BooksController extends Controller
 	 */
 	public function show($string)
 	{
-		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','description','book_categories.category')
-		->join('book_categories', 'book_categories.id', '=', 'books.category_id')
+		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','description','book_call_Numbers.callNumber')
+		->join('book_call_Numbers', 'book_call_Numbers.id', '=', 'books.callNumber')
 			->where('title', 'like', '%' . $string . '%')
 			->orWhere('author', 'like', '%' . $string . '%')
 			->orderBy('book_id');
@@ -191,8 +191,8 @@ class BooksController extends Controller
 		$issue->book_name = $book->title;
 		$issue->author = $book->author;
 
-		$issue->category = Categories::find($book->category_id)
-			->category;
+		$issue->callNumber = Categories::find($book->callNumber)
+			->callNumber;
 
 		$issue->available_status = (bool)$issue->available_status;
 		if($issue->available_status == 1){
@@ -259,7 +259,7 @@ class BooksController extends Controller
 		//
 	}
 
-	public function renderAddBookCategory(Type $var = null)
+	public function renderAddBookCallNumber(Type $var = null)
 	{
         return view('panel.addbookcategory');
 	}
@@ -269,21 +269,21 @@ class BooksController extends Controller
         $db_control = new HomeController();
 
         return view('panel.addbook')
-            ->with('categories_list', $db_control->categories_list);
+            ->with('callNumber_list', $db_control->callNumber_list);
     }
 
     public function renderAllBooks() {
         $db_control = new HomeController();
 
 		return view('panel.allbook')
-            ->with('categories_list', $db_control->categories_list);
+            ->with('callNumber_list', $db_control->callNumber_list);
 	}
 	
-	public function BookByCategory($cat_id)
+	public function BookByCallNumber($callNumber)
 	{
-		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','description','book_categories.category')
-		->join('book_categories', 'book_categories.id', '=', 'books.category_id')
-			->where('category_id', $cat_id)->orderBy('book_id');
+		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','description','book_call_Numbers.callNumber')
+		->join('book_call_Numbers', 'book_call_Numbers.id', '=', 'books.callNumber')
+			->where('books.callNumber', $callNumber)->orderBy('book_id');
 
 			$book_list = $book_list->get();
 
@@ -299,7 +299,7 @@ class BooksController extends Controller
 					->where('book_id','=',$id)
 					->count();
 	
-				$book_list[$i]['avaliable'] = Issue::select()
+				$book_list[$i]['available'] = Issue::select()
 					->where($conditions)
 					->count();
 			}
@@ -311,6 +311,6 @@ class BooksController extends Controller
     	$db_control = new HomeController();
 
 		return view('public.book-search')
-			->with('categories_list', $db_control->categories_list);
+			->with('callNumber_list', $db_control->callNumber_list);
     }
 }

@@ -22,7 +22,7 @@ class CreateBooksTable extends Migration
             $table->string('edition');
             $table->integer('year')->unsigned();
             $table->text('description');
-            $table->integer('category_id')->unsigned();
+            $table->String('callNumber');
             $table->integer('added_by')->unsigned();
 
             $table->timestamps();

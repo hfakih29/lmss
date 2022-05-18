@@ -96,12 +96,12 @@ Route::group(['middleware' => ['auth']] , function() {
 		'as' 	=> 'account-userlogin',
 		'uses' 	=> 'AccountController@getUserHome'
 	));
-	Route::get('/add-book-category', array(
-        'as' => 'add-book-category',
-        'uses' => 'BooksController@renderAddBookCategory'
+	Route::get('/add-book-callNumber', array(
+        'as' => 'add-book-callNumber',
+        'uses' => 'BooksController@renderAddBookCallNumber'
 	));
 	
-	Route::post('/bookcategory', 'BooksController@BookCategoryStore')->name('bookcategory.store');
+	Route::post('/bookcallnumber', 'BooksController@BookCallNumberStore')->name('bookcallnumber.store');
 	
 
 	// Render All Books panel
@@ -110,9 +110,9 @@ Route::group(['middleware' => ['auth']] , function() {
         'uses' => 'BooksController@renderAllBooks'
 	));
 	
-	Route::get('/bookBycategory/{cat_id}', array(
-        'as' => 'bookBycategory',
-        'uses' => 'BooksController@BookByCategory'
+	Route::get('/bookBycallnumber/{callNumber}', array(
+        'as' => 'bookBycallnumber',
+        'uses' => 'BooksController@BookByCallNumber'
     ));
 
 	// Students

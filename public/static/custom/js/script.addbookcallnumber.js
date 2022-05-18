@@ -1,7 +1,7 @@
 function loadResults(){
 
     var url = config.path.ajax 
-            + "/books?category_id=" + $('#category_fill').val();
+            + "/books?callNumber=" + $('#callNumber_fill').val();
 
     var table = $('#all-books');
     
@@ -11,7 +11,7 @@ function loadResults(){
         url : url,
         success : function(data){
             if($.isEmptyObject(data)){
-                table.html('<tr><td colspan="99">No Books in this category</td></tr>');
+                table.html('<tr><td colspan="99">No Books with this call number</td></tr>');
             } else {
                 table.html('');
                 for (var book in data) {
@@ -30,11 +30,11 @@ function loadResults(){
 
 $(document).ready(function(){
 
-    $("#category_fill").change(function(){
+    $("#callNumber_fill").change(function(){
         loadResults();
     });
 
-    $(document).on("click","#addbookcategory",function(){
+    $(document).on("click","#addbookcallnumber",function(){
 
         var form = $(this).parents('form'),
             module_body = $(this).parents('.module-body'),
@@ -44,11 +44,11 @@ $(document).ready(function(){
                 return form.find(selector);
             };
 
-        category = f$('input[data-form-field~=category]').val();
+        callNumber = f$('input[data-form-field~=callNumber]').val();
         _token = f$('input[data-form-field~=token]').val();
 
-        if(category == ""){
-            module_body.prepend(templates.alert_box( {type: 'danger', message: 'Category Field is Required'} ));
+        if(callNumber == ""){
+            module_body.prepend(templates.alert_box( {type: 'danger', message: 'Call Number Field is Required'} ));
             send_flag = false;
         }
         
@@ -57,9 +57,9 @@ $(document).ready(function(){
             $.ajax({
                 type : 'POST',
                 data : {
-                    category : category, _token:_token
+                    callNumber : callNumber, _token:_token
                 },
-                url : '/bookcategory',
+                url : '/bookcallnumber',
                 success: function(data) {                    
                     module_body.prepend(templates.alert_box( {type: 'success', message: data} ));
                     clearform();
@@ -85,5 +85,5 @@ $(document).ready(function(){
 });
 
 function clearform(){
-    $('#category').val('');
+    $('#callNumber').val('');
 }

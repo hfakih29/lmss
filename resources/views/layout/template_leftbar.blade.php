@@ -31,8 +31,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('add-book-category') }}">
-                    <i class="menu-icon icon-folder-open-alt"></i>Add Book Category
+                <a href="{{ URL::route('add-book-callNumber') }}">
+                    <i class="menu-icon icon-folder-open-alt"></i>Add Book Call Number
                 </a>
             </li>
             <li>

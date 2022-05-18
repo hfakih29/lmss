@@ -46,12 +46,15 @@
                     <table class="table table-striped table-bordered table-condensed" style="display: none;">
                         <thead>
                             <tr>
-                                <th>Book ID</th>
-                                <th>Book Title</th>
-                                <th>Author</th>
-                                <th>Description</th>
-                                <th>Category</th>
-                                <th>Status</th>
+                            <th>Book_id</th>
+                        	<th>Title</th>
+	                        <th>Author</th>
+	                        <th>ISBN</th>
+                            <th>Publisher</th>
+                            <th>Year</th>
+                            <th>Edition</th>
+                            <th>Call Number</th>
+                            <td>Availability</td>
                             </tr>
                         </thead>
                         <tbody id="book-results"></tbody>
@@ -92,7 +95,7 @@
     </div>
     <input type="hidden" name="" id="branches_list" value="{{ json_encode($branch_list) }}">
     <input type="hidden" name="" id="student_categories_list" value="{{ json_encode($student_categories_list) }}">
-    <input type="hidden" name="" id="categories_list" value="{{ json_encode($categories_list) }}">
+    <input type="hidden" name="" id="callNumber_list" value="{{ json_encode($callNumber_list) }}">
     <input type="hidden" id="_token"  data-form-field="token"  value="{{ csrf_token() }}">
 
 </div>
@@ -103,7 +106,7 @@
 <script type="text/javascript">
         var branches_list = $('#branches_list').val(),
         student_categories_list = $('#student_categories_list').val(),
-        categories_list = $('#categories_list').val(),
+        callNumber_list = $('#callNumber_list').val(),
         _token = $('#_token').val();
 </script>
 

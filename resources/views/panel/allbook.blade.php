@@ -15,9 +15,10 @@
                 <small>table class="table table-striped table-bordered table-condensed"</small>
             </p> -->
             <div class="controls">
-                <select class="" id="category_fill">
-                    @foreach($categories_list as $category)
-                        <option value="{{ $category->id }}">{{ $category->category }}</option>
+                <select class="" id="callNumber_fill">
+                <option value="none">none</option>
+                    @foreach($callNumber_list as $callNumber)
+                        <option value="{{ $callNumber->id }}">{{ $callNumber->callNumber }}</option>
                     @endforeach
                 </select>
             </div>
@@ -32,7 +33,7 @@
                         <th>Year</th>
                         <th>Edition</th>
                         <th>Description</th>
-                        <th>Category</th>
+                        <th>CallNumber</th>
                         <th>Available</th>
                         <th>Total</th>
                     </tr>
@@ -45,13 +46,13 @@
             </table>
         </div>
     </div>
-    <input type="hidden" name="" id="categories_list" value="{{ json_encode($categories_list) }}">
+    <input type="hidden" name="" id="callNumber_list" value="{{ json_encode($callNumber_list) }}">
 </div>
 @stop
 
 @section('custom_bottom_script')
 <script type="text/javascript">
-    var categories_list = $('#categories_list').val();
+    var callNumber_list = $('#callNumber_list').val();
 </script>
 <script type="text/javascript" src="{{asset('static/custom/js/script.addbook.js') }}"></script>
 <script type="text/template" id="allbooks_show">
