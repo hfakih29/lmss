@@ -90,7 +90,15 @@ class AccountController extends Controller
 			}
 		}
 	}
-
+	public function upload(Request $request)
+    {
+        if($request->hasFile('image')){
+            $filename = $request->image->getClientOriginalName();
+            $request->image->storeAs('images',$filename,'public');
+            Auth()->user()->update(['image'=>$filename]);
+        }
+        return redirect()->back();
+    }
 	public function getSignIn() {
 		return view('account.signin');
 	}
@@ -99,7 +107,12 @@ class AccountController extends Controller
 	public function getCreate() {
 		return view('account.create');
 	}
-	
+	public function getProfile() {
+		return view('account.profile');
+	}
+	public function getUserProfile() {
+		return view('account.userprofile');
+	}
 	/* Viewing the form (GET) */
 	public function getLogin() {
 		return view('account.login');

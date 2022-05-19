@@ -39,7 +39,12 @@ Route::group(array('before' => 'guest'), function() {
 			'as' => 'student-registration-post',
 			'uses' => 'StudentController@postRegistration'
 		));		
-
+		
+			Route::get('/pic', array(
+		'as' 	=> 'account-pic-upload',
+		'uses'	=> 'AccountController@upload'
+	));
+	
 	});
 
 	// Sign in (GET) 
@@ -57,6 +62,14 @@ Route::group(array('before' => 'guest'), function() {
 	Route::get('/login', array(
 		'as' 	=> 'account-login',
 		'uses' 	=> 'AccountController@getLogin'
+	));
+	Route::get('/profile', array(
+		'as' 	=> 'account-profile',
+		'uses' 	=> 'AccountController@getProfile'
+	));
+	Route::get('/Userprofile', array(
+		'as' 	=> 'account-Userprofile',
+		'uses' 	=> 'AccountController@getUserProfile'
 	));
 
 	// Student Registeration form 
@@ -76,6 +89,8 @@ Route::group(array('before' => 'guest'), function() {
 // Main books Controlller left public so that it could be used without logging in too
 Route::resource('/books', 'BooksController');
 
+
+
 // Authenticated group 
 // Route::group(array('before' => 'auth'), function() {
 Route::group(['middleware' => ['auth']] , function() {
@@ -85,7 +100,10 @@ Route::group(['middleware' => ['auth']] , function() {
 		'as' 	=> 'home',
 		'uses'	=> 'HomeController@home'
 	));	
-
+	Route::post('/pic', array(
+		'as' 	=> 'account-pic-upload',
+		'uses'	=> 'AccountController@upload'
+	));
 	// Render Add Books panel
     Route::get('/add-books', array(
         'as' => 'add-books',
