@@ -64,9 +64,18 @@
 				<button type="submit">Register
 					<i class="zmdi zmdi-arrow-right"></i>
 				</button>
-				<a href="{{ URL::route('account-sign-in') }}">Already A User?</a>
-					
+				<a href="{{ URL::route('account-login') }}">Already A User?</a>
+				@if(Session::has('global'))
+	
+			
+	<div class="alert alert-success">
+		{{ Session::get('global') }}
+	</div>
+
+
+@endif
 			</form>
+			
 		</div>
 	</div>
 

@@ -81,13 +81,12 @@ $(document).on("click","#addbooks",function(){
         publisher = f$('input[data-form-field~=publisher]').val();
         year = parseInt(f$('input[data-form-field~=year]').val());
         edition = f$('input[data-form-field~=edition]').val();
-        description = f$('textarea[data-form-field~=description]').val();
         callNumber = f$('select[data-form-field~=callNumber]').val();
         number = parseInt(f$('input[data-form-field~=number]').val());
         auth_user = f$('input[data-form-field~=auth_user]').val();
         _token = f$('input[data-form-field~=token]').val();
 
-        if(title == "" || author == "" || description == "" || number == null){
+        if(title == "" || author == "" ||  number == null){
             module_body.prepend(templates.alert_box( {type: 'danger', message: 'Book Details Not Complete'} ));
             send_flag = false;
         }
@@ -98,7 +97,7 @@ $(document).on("click","#addbooks",function(){
                 type : 'POST',
                 data : {
                    title:title, author:author, ISBN:ISBN, publisher:publisher, year:year
-                    , edition:edition    , description:description  ,   number:number, callNumber : callNumber, _token:_token,
+                    , edition:edition    ,  number:number, callNumber:callNumber, _token:_token,
                     auth_user:auth_user
                 },
                 url : '/books',
@@ -132,7 +131,6 @@ function clearform(){
     $('#publisher').val('');
     $('#year').val('');
     $('#edition').val('');
-    $('#description').val('');
     $('#number').val('');
     $('#callNumber').val('');
 }

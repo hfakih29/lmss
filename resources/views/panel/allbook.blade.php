@@ -32,7 +32,6 @@
                         <th>Publisher</th>
                         <th>Year</th>
                         <th>Edition</th>
-                        <th>Description</th>
                         <th>CallNumber</th>
                         <th>Available</th>
                         <th>Total</th>

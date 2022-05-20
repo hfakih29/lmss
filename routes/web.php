@@ -44,6 +44,10 @@ Route::group(array('before' => 'guest'), function() {
 		'as' 	=> 'account-pic-upload',
 		'uses'	=> 'AccountController@upload'
 	));
+		Route::post('/bookpic', array(
+			'as' 	=> 'account-bookpic-upload',
+			'uses'	=> 'BooksController@upload'
+	));
 	
 	});
 
@@ -104,6 +108,15 @@ Route::group(['middleware' => ['auth']] , function() {
 		'as' 	=> 'account-pic-upload',
 		'uses'	=> 'AccountController@upload'
 	));
+
+	Route::prefix('admin')->group(function(){
+ 
+		Route::get('/add-Book', [BooksController::class, 'addcategory'])->name('add.category');
+		Route::get('/list-category', [BooksController::class, 'listcategory'])->name('list.category');
+		Route::post('/store-Book', [BooksController::class, 'storeBook'])->name('store.book');
+		 
+		});
+
 	// Render Add Books panel
     Route::get('/add-books', array(
         'as' => 'add-books',

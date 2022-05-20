@@ -8,7 +8,7 @@ use App\Models\StudentCategories;
 
 use App\Models\Branch;
 
-use App\Models\Categories;
+use App\Models\CallNumber;
 use Exception;
 
 class HomeController extends Controller
@@ -19,7 +19,7 @@ class HomeController extends Controller
     public $student_categories_list = array();
 
     public function __construct() {
-        $this->callNumber_list = Categories::select()->orderBy('callNumber')->get();
+        $this->callNumber_list = CallNumber::select()->orderBy('callNumber')->get();
         $this->branch_list = Branch::select()->orderBy('id')->get();
         $this->student_categories_list = StudentCategories::select()->orderBy('cat_id')->get();
     }
