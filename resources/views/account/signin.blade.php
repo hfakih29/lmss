@@ -1,4 +1,5 @@
-@extends('account.index')
+
+
 <!doctype html>
 <html lang="en">
 
@@ -15,7 +16,11 @@
   <link rel="stylesheet" href="{{asset('css/index.css')}}">
   <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
   <link href="{{ asset('css/searchbar.css ')}}" rel="stylesheet" />
-  <link rel="stylesheet" href="{{asset('css/index.css')}}">
+  <link type="text/css" href="{{ asset('static/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('static/bootstrap/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('static/css/theme.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('static/images/icons/css/font-awesome.css') }}" rel="stylesheet">
+    <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
 
   <title>Library Management System</title>
 </head>
@@ -63,9 +68,25 @@
     </div>
   </header>
   <div class="s003" style="background-image: url('images/main\ bg.jpg');">
-     
-       
+
         @include('public.book-search')
+       
+        <script src="{{ asset('static/scripts/jquery-1.9.1.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('static/scripts/jquery-ui-1.10.1.custom.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('static/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+
+<script type="text/template" id="alert_box">
+    @include('underscore.alert_box')
+
+
+</script>
+<script src="{{ asset('static/custom/js/script.common.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('static/scripts/underscore-min.js') }}" type="text/javascript"></script>
+  <script>
+        $(document).ready(function(){ 
+        $("input").attr("autocomplete", "off");
+    });
+</script>
 </body>
 
 </html>

@@ -54,10 +54,10 @@
     </style>
 
 
-    
+
     @include('account.message')
     @yield('content')
-    
+
 
 <script src="{{ asset('static/scripts/jquery-1.9.1.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('static/scripts/jquery-ui-1.10.1.custom.min.js') }}" type="text/javascript"></script>

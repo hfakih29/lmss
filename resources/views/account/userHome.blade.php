@@ -1,3 +1,4 @@
+@extends('account.index')
 <!doctype html>
 <html lang="en">
 
@@ -7,18 +8,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
 
   <link rel="stylesheet" href="{{asset('fonts/icomoon/style.css')}}">
-
+  
+  
+  <link type="text/css" href="{{asset('static/images/icons/css/font-awesome.css') }}" rel="stylesheet">
+  <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
   <!-- Style -->
-  <link rel="stylesheet" href="{{asset('css/index.css')}}">
-  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
-  <link href="{{ asset('css/searchbar.css ')}}" rel="stylesheet" />
-  <link rel="stylesheet" href="{{asset('css/index.css')}}">
+<link rel="stylesheet" href="{{asset('css/index.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+<link href="{{ asset('css/searchbar.css ')}}" rel="stylesheet" />
+
+
+
+    
 
   <title>Library Management System</title>
 </head>
-
 <body>
   <div class="site-mobile-menu site-navbar-target">
     <div class="site-mobile-menu-header">
@@ -36,10 +42,10 @@
           </a></div>
 
         <nav class="mx-auto site-navigation">
-          <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-            <li><a href="{{ URL::route('account-userlogin') }}" class="nav-link active">Home</a></li>
+          <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">           
             <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>           
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="{{ URL::route('member-registration') }}">Apply for member</a></li>           
         </nav>
         <div class="ml-auto nav-user dropdown  "><a href="#" class="dropdown-toggle" data-toggle="dropdown">
         {{ auth()->user()->username }}
@@ -56,22 +62,67 @@
   </header>
   <div class="s003" style="background-image: url('images/main\ bg.jpg');">
      
-        @include('account.message')
-        @include('public.book-search')
+	<div class="container">
+		<br/>
+		<div class="row justify-content-center">
+			<div class="module span9">
+				
+				<div class="module-body">
+					<form class="form-horizontal row-fluid">
+						<div class="control-group">
+							<label class="control-label">Name or author<br>of the book</label>
+							<div class="controls">
+								<textarea class="span14" rows="1"></textarea>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<div class="controls" id="search_book_button">
+								<a class="btn btn-default">Search Book</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="display: none;">
+			<div class="module span12">
+				<div class="module-body">
+		            <table class="table table-striped table-bordered table-condensed">
+		                <thead>
+		                    <tr>
+                        <th>Book Title</th>
+                        <th>Author</th>
+                        <th>ISBN</th>
+                        <th>Publisher</th>
+                        <th>Year</th>
+                        <th>Edition</th>
+                        <th>Available</th>
+		                    </tr>
+		                </thead>
+		                <tbody id="book-results"></tbody>
+		            </table>
+				</div>
+			</div>
+		</div>
+
+	
+
+
+
+@section('custom_bottom_script')
+<script type="text/javascript">
+    var callNumber_list = $('#callNumber_list').val();
+</script>
+<script type="text/javascript" src="{{  asset('static/custom/js/script.searchbook.js') }}"></script>
+
+<script type="text/template" id="search_book">
+    @include('underscore.search_bookMember')
+</script>
+@stop
 
         
-<script src="{{asset('static/scripts/jquery-1.9.1.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('static/scripts/jquery-ui-1.10.1.custom.min.js') }}" type="text/javascript"></script>
-<script src="{{asset('static/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('static/scripts/underscore-min.js') }}" type="text/javascript"></script>
 
-<script src="{{asset('static/custom/js/script.common.js') }}" type="text/javascript"></script>
-
-<link type="text/css" href="{{asset('static/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link type="text/css" href="{{asset('static/bootstrap/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
-    <link type="text/css" href="{{asset('static/css/theme.css') }}" rel="stylesheet">
-    <link type="text/css" href="{{asset('static/images/icons/css/font-awesome.css') }}" rel="stylesheet">
-    <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
 </body>
 
 </html>

@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-    protected $fillable = array('first_name','last_name','approved','category','roll_num','branch','year','email_id');
+    protected $fillable = array('firstname','lastname','email','approved','has_credit_card');
 
     public $timestamps = false;
 
 	protected $table = 'students';
-	protected $primaryKey = 'student_id';
+	protected $primaryKey = 'member_id';
 
 	protected $hidden = array();
 

@@ -77,14 +77,9 @@ class LogController extends Controller
 				// throw new Exception('');
 			} else {
 				$books_issued = $student->books_issued;
-				$category = $student->category;
+					
 				
-				$max_allowed = StudentCategories::where('cat_id', '=', $category)->firstOrFail()->max_allowed;
 				
-				if($books_issued >= $max_allowed){
-
-					return 'Student cannot issue any more books';
-				} else {
 
 					$book = Issue::where('book_id', $bookID)->where('available_status', '!=', 0)->first();
 
@@ -127,7 +122,7 @@ class LogController extends Controller
 							return 'Book Issued Successfully!';
 						}
 					}
-				}
+				
 			}
 		}
 	}

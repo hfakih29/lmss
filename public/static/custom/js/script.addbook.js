@@ -97,7 +97,7 @@ $(document).on("click","#addbooks",function(){
                 type : 'POST',
                 data : {
                    title:title, author:author, ISBN:ISBN, publisher:publisher, year:year
-                    , edition:edition    ,  number:number, callNumber:callNumber, _token:_token,
+                    , edition:edition    ,   callNumber:callNumber,number:number, _token:_token,
                     auth_user:auth_user
                 },
                 url : '/books',

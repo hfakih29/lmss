@@ -1,14 +1,5 @@
 function loadResults(){
-    var url = "/student/create?branch=" + $('#branch_select').val();
-   
-    if($('#year_select').val() != 0){
-        url += "&year=" + $('#year_select').val();
-        // alert(url);
-    }
-
-    if($('#category_select').val() != 0){
-        url += "&category=" + $('#category_select').val();
-    }
+    var url = "/member/create";
 
     var table = $('#students-table');
     
@@ -19,7 +10,7 @@ function loadResults(){
         success : function(data){
             console.log(data);
             if($.isEmptyObject(data)){
-                table.html('<tr><td colspan="99">No Students for these filters</td></tr>');
+                table.html('<tr><td colspan="99">No Students approved</td></tr>');
             } else {
                 table.html('');
                 for (var student in data) {
@@ -37,18 +28,7 @@ function loadResults(){
 }
 
 $(document).ready(function(){
-    $("#branch_select").change(function(){
-        loadResults();
-    });
 
-    $("#category_select").change(function(){
-        loadResults();
-    });
-
-    $("#year_select").change(function(){
-        loadResults();
-    });
-    
     loadResults();
 
 });

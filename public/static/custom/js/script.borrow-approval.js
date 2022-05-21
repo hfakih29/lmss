@@ -1,20 +1,19 @@
 function loadResults(){
-    var url =  "/member" ;
+    var url =  "/borrow";
 
-
-    var table = $('#approval-table');
+    var table = $('#borrowapproval-table');
     
-    var default_tpl = _.template($('#approvalstudents_show').html());
+    var default_tpl = _.template($('#approvalborrow_show').html());
 
     $.ajax({
         url : url,
         success : function(data){
             if($.isEmptyObject(data)){
-                table.html('<tr><td colspan="99">No requests for approval</td></tr>');
+                table.html('<tr><td colspan="99">No pending requests for these filters</td></tr>');
             } else {
                 table.html('');
-                for (var student in data) {
-                    table.append(default_tpl(data[student]));
+                for (var Borrow in data) {
+                    table.append(default_tpl(data[Borrow]));
                 }
             }
         },
@@ -29,10 +28,9 @@ function loadResults(){
 
 
 
-
-function approveMember(memberID, flag, btn) {
+function approveBorrow(issueID, flag, btn) {
     var module_body = btn.parents('.module-body'),
-        table = $('#approval-table');
+        table = $('#borrowapproval-table');
 
     console.log(flag);
 
@@ -43,7 +41,7 @@ function approveMember(memberID, flag, btn) {
             flag : flag,
             _token:_token
         },
-        url : '/member/' + memberID,
+        url : '/borrow/' + issueID,
         success: function(data) {
             module_body.prepend(templates.alert_box( {type: 'success', message: data} ));
             loadResults();
@@ -63,16 +61,15 @@ function approveMember(memberID, flag, btn) {
 $(document).ready(function(){
 
 
-
-    $(document).on("click",".member-status",function(){
+    $(document).on("click",".issue-status",function(){
         var selectedRow = $(this).parents('tr'),
-            memberID = selectedRow.data('member-id')
+            issueID = selectedRow.data('issue-id')
             flag = $(this).data('status');
         
-        console.log(memberID);
+        console.log(issueID);
         console.log(flag);
         
-        approveMember(memberID, flag, $(this));
+        approveBorrow(issueID, flag, $(this));
     });
     
     loadResults();

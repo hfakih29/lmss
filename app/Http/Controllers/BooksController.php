@@ -93,7 +93,6 @@ class BooksController extends Controller
 				'publisher'		=> $books['publisher'],
 				'year'			=> $books['year'],
 				'edition'		=> $books['edition'],
-				'image'			=> $books['image'],
 				'callNumber'	=> $books['callNumber'],
 				
 				'added_by'		=> $user_id
@@ -135,10 +134,10 @@ class BooksController extends Controller
 		
 		if (!$bookcallnumber) {
 
-			return 'Book Category fail to save!';
+			return 'Book Call Number fail to save!';
 		}else {
 
-			return "Book Category Added successfully to Database";
+			return "Book Call Number Added successfully to Database";
 		}
 	}
 
@@ -325,7 +324,11 @@ class BooksController extends Controller
 		
         return redirect()->back();
     }
- 
+	public function renderApprovalBorrows(){
+		$db_control = new HomeController;
+		return view('panel.borrowapproval');
+
+	}
 
 }
 

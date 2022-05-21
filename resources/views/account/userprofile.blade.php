@@ -36,10 +36,10 @@
           </a></div>
 
         <nav class="mx-auto site-navigation">
-          <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-            <li><a href="{{ URL::route('account-userlogin') }}" class="nav-link active">Home</a></li>
+          <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">            
             <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>           
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="{{ URL::route('member-registration') }}">Apply as member</a></li>          
         </nav>
         <div class="ml-auto nav-user dropdown  "><a href="#" class="dropdown-toggle" data-toggle="dropdown">
         {{ auth()->user()->username }}

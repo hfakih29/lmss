@@ -8,16 +8,18 @@ use App\Models\Books;
 use App\Models\Issue;
 use App\Models\Branch;
 use App\Models\Student;
+use App\Models\CreditCard;
 use Illuminate\Http\Request;
 use App\Models\StudentCategories;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
     public function __construct(){
 
-		$this->filter_params = array('branch','year','category');
+		
 
 	}
 
@@ -28,68 +30,16 @@ class StudentController extends Controller
 			'rejected'	=> 0
 		);
 
-		$students = Student::join('branches', 'branches.id', '=', 'students.branch')
-		->join('student_categories', 'student_categories.cat_id', '=', 'students.category')
-		->select('student_id', 'first_name', 'last_name', 'student_categories.category', 'roll_num', 'branches.branch', 'year')
+		$member = Student::select('member_id', 'firstname', 'lastname')
 			->where($conditions)
-			->orderBy('student_id');
+			->orderBy('member_id');
 
-		// $this->filterQuery($students);
-		$students = $students->get();
-		// dd($students);
-        return $students;
+		// $this->filterQuery($member);
+		$member = $member->get();
+		// dd($member);
+        return $member;
 	}
 
-	public function StudentByAttribute(Request $request)
-	{
-		// dd($request->branch );
-		$conditions = array(
-			'approved'	=> 0,
-			'rejected'	=> 0
-		);
-		if ($request->branch != 0) {
-			
-			$students = Student::join('branches', 'branches.id', '=', 'students.branch')
-			->join('student_categories', 'student_categories.cat_id', '=', 'students.category')
-			->select('student_id', 'first_name', 'last_name', 'student_categories.category', 'roll_num', 'branches.branch', 'year')
-				->where($conditions)
-				->where('students.branch', $request->branch)
-				->orderBy('student_id');
-			$students = $students->get();
-			return $students;
-		
-		}
-
-		elseif ($request->category != 0) {
-			
-			$students = Student::join('branches', 'branches.id', '=', 'students.branch')
-			->join('student_categories', 'student_categories.cat_id', '=', 'students.category')
-			->select('student_id', 'first_name', 'last_name', 'student_categories.category', 'roll_num', 'branches.branch', 'year')
-				->where($conditions)
-				->where('students.category', $request->category)
-				->orderBy('student_id');
-			$students = $students->get();
-			return $students;
-		
-		}
-
-		elseif ($request->year != 0) {
-			// dd($request->year );
-			$students = Student::join('branches', 'branches.id', '=', 'students.branch')
-			->join('student_categories', 'student_categories.cat_id', '=', 'students.category')
-			->select('student_id', 'first_name', 'last_name', 'student_categories.category', 'roll_num', 'branches.branch', 'year')
-				->where($conditions)
-				->where('students.year', $request->year)
-				->orderBy('student_id');
-			$students = $students->get();
-
-			return $students;
-		
-		}
-		return "No Result Found";
-
-		
-	}
 
 
 	public function create()
@@ -99,18 +49,15 @@ class StudentController extends Controller
 			'rejected'	=> 0
 		);
 
-		$students = Student::join('branches', 'branches.id', '=', 'students.branch')
-		->join('student_categories', 'student_categories.cat_id', '=', 'students.category')
-		->select('student_id', 'first_name', 'last_name', 'student_categories.category', 'roll_num', 'branches.branch', 'year', 'email_id', 'books_issued')
+		$member = Student::select('member_id', 'firstname', 'lastname','email','books_issued')
 			->where($conditions)
-			->orderBy('student_id');
+			->orderBy('member_id');
 
-		// $this->filterQuery($students);
-		$students = $students->get();
-
-        return $students;
+		// $this->filterQuery($member);
+		$member = $member->get();
+		// dd($member);
+        return $member;
 	}
-
 
 	/**
 	 * Store a newly created resource in storage.
@@ -136,13 +83,7 @@ class StudentController extends Controller
 			throw new Exception('Invalid Student ID');
 		}
 
-		$student->year = (int)substr($student->year, 2, 4);
-
-		$student_category = StudentCategories::find($student->category);
-		$student->category = $student_category->category;
-
-		$student_branch = Branch::find($student->branch);
-		$student->branch = $student_branch->branch;
+		
 
 
 		if($student->rejected == 1){
@@ -227,124 +168,66 @@ class StudentController extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy(Request $request, $id)
-	{
-		// dd($request->all());
-		if ($request->category) {
-			
-			$student = StudentCategories::find($id);
-			$student->delete();
-			if (!$student) {
-				return "Student Category Fail to Delete!.";
-			}else {
-				return redirect(route('settings'));
-			}
-		}elseif ($request->branch) {
-			
-			$branch = Branch::find($id);
-			$branch->delete();
-			if (!$branch) {
-				return "School Branch Fail to Delete!.";
-			}else {
-				return redirect(route('settings'));
-			}
-		}
-	}
+
 
 
 	public function renderStudents(){
 		$db_control = new HomeController;
-		return view('panel.students')
-			->with('branch_list', $db_control->branch_list)
-			->with('student_categories_list', $db_control->student_categories_list);
+		return view('panel.students');
+
 	}
 
 	public function renderApprovalStudents(){
 		$db_control = new HomeController;
-		return view('panel.approval')
-			->with('branch_list', $db_control->branch_list)
-			->with('student_categories_list', $db_control->student_categories_list);
+		return view('panel.approval');
+
 	}
 
 	public function getRegistration(){
 		$db_control = new HomeController;
-		return view('public.registration')
-			->with('branch_list', $db_control->branch_list)
-			->with('student_categories_list', $db_control->student_categories_list);
+		return view('public.registration');
+
 	}
 
 	public function postRegistration(Request $request){
 
 		$validator = $request->validate([
 
-				'first'			=> 'required|alpha',
-				'last'			=> 'required|alpha',
-				'rollnumber'	=> 'required|integer',
-				'branch'		=> 'required|between:0,10',
-				'year'			=> 'required|integer',
-				'email'			=> 'required|email',
-				'category'		=> 'required|between:0,5'
+				'name'			=> 'required',
+				'cardnumber'	=> 'required',
+				'expirationdate'=> 'required',
+				'securitycode'	=> 'required',
+
 
 		]);
 
 		if(!$validator) {
-			return Redirect::route('student-registration')
+			return Redirect::route('member-registration')
 				->withErrors($validator)
 				->withInput();   // fills the field with the old inputs what were correct
 
 		} else {
-			$student = Student::create(array(
-				'first_name'	=> $request->get('first'),
-				'last_name'		=> $request->get('last'),
-				'category'		=> $request->get('category'),
-				'roll_num'		=> $request->get('rollnumber'),
-				'branch'		=> $request->get('branch'),
-				'year'			=> $request->get('year'),
-				'email_id'		=> $request->get('email'),
+			$CreditCard = CreditCard::create(array(
+				'Name'			=> $request->get('name'),
+				'CardNumber'	=> $request->get('cardnumber'),
+				'expirationdate'=> $request->get('expirationdate'),
+				'CVV'			=> $request->get('securitycode'),
+				
 			));
 
-			if($student){
-				return Redirect::route('student-registration')
-					->with('global', 'Your request has been raised, you will be soon approved!');
+			if($CreditCard){
+				$Student = Student::create(array(
+					'firstname'			=> auth()->user()->firstname,
+					'lastname'			=> auth()->user()->lastname,
+					'email'				=> auth()->user()->email,
+					'has_credit_card'	=> '1',
+					
+				));
+				return Redirect::route('member-registration')
+					->with('global', 'Your credit card info was added, you will be soon approved!');
 			}
 		}
 	}
 
-	public function Setting()
-	{
-		$branches = Branch::all();
-		$student_category = StudentCategories::all();
-
-		return view('panel.addsettings')
-		->with('branches', $branches)
-		->with('student_category', $student_category);
-	}
-
-	public function StoreSetting(Request $request)
-	{
-		// dd($request->all());
-		if ($request->category) {
-			
-			$student = StudentCategories::create($request->all());
-
-			if (!$student) {
-				return "Student Category Fail to Save!.";
-			}else {
-				return "Student Category Save Succesfully!.";
-				// return back();
-			}
-		}elseif ($request->branch) {
-			
-			$branch = Branch::create($request->all());
-
-			if (!$branch) {
-				return "School Branch Fail to Save!.";
-			}else {
-				return "School Branch Save Succesfully!.";
-				// return back();
-			}
-		}
-
-		
-	}
+	
 }

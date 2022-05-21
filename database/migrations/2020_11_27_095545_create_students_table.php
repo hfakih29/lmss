@@ -14,17 +14,16 @@ class CreateStudentsTable extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->bigIncrements('student_id');
-            $table->string('first_name', 512);
-            $table->string('last_name', 512);
+            $table->bigIncrements('member_id');
+            $table->string('firstname', 512);
+            $table->string('lastname', 512);
+            $table->string('email')->unique();
             $table->tinyInteger('approved')->default(0);
             $table->tinyInteger('rejected')->default(0);
-            $table->integer('category')->unsigned();
-            $table->string('roll_num', 15);
-            $table->tinyInteger('branch')->default(0);
-            $table->integer('year')->unsigned();
+            $table->boolean('has_credit_card')->nullable();
             $table->tinyInteger('books_issued')->default(0);
-            $table->string('email_id', 512);
+            
+            
             $table->timestamps();
         });
     }

@@ -1,4 +1,4 @@
-
+@extends('account.index')
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 
@@ -33,12 +33,14 @@
 		            <table class="table table-striped table-bordered table-condensed">
 		                <thead>
 		                    <tr>
+						<th>Book ID</th>
                         <th>Book Title</th>
-                        <th>Author</th>
-                        <th>ISBN</th>
+						<th>ISBN</th>
+                        <th>Author</th>                       
                         <th>Publisher</th>
+						<th>Edition</th>
                         <th>Year</th>
-                        <th>Edition</th>
+                        <th>call number</th>
                         <th>Available</th>
 		                    </tr>
 		                </thead>

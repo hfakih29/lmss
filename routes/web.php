@@ -26,7 +26,7 @@ Route::group(array('before' => 'guest'), function() {
 			'as' => 'account-create-post',
 			'uses' => 'AccountController@postCreate'
 		));
-
+  
 		// Sign in (POST) 
 		Route::post('/sign-in', array(
 			'as' => 'account-sign-in-post',
@@ -35,20 +35,18 @@ Route::group(array('before' => 'guest'), function() {
 		
 
 		// Sign in (POST) 
-		Route::post('/student-registration', array(
-			'as' => 'student-registration-post',
+		Route::post('/member-registration', array(
+			'as' => 'member-registration-post',
 			'uses' => 'StudentController@postRegistration'
-		));		
+		));
+
+				
 		
 			Route::get('/pic', array(
 		'as' 	=> 'account-pic-upload',
 		'uses'	=> 'AccountController@upload'
 	));
-		Route::post('/bookpic', array(
-			'as' 	=> 'account-bookpic-upload',
-			'uses'	=> 'BooksController@upload'
-	));
-	
+
 	});
 
 	// Sign in (GET) 
@@ -77,11 +75,14 @@ Route::group(array('before' => 'guest'), function() {
 	));
 
 	// Student Registeration form 
-	Route::get('/student-registration', array(
-		'as' 	=> 'student-registration',
+	Route::get('/member-registration', array(
+		'as' 	=> 'member-registration',
 		'uses' 	=> 'StudentController@getRegistration'
 	));
-    
+	Route::post('/borrow-request', array(
+		'as' => 'borrow-request-post',
+		'uses' => 'BorrowController@borrowRequest'
+	));		
     // Render search books panel
     Route::get('/book', array(
         'as' => 'search-book',
@@ -109,13 +110,7 @@ Route::group(['middleware' => ['auth']] , function() {
 		'uses'	=> 'AccountController@upload'
 	));
 
-	Route::prefix('admin')->group(function(){
- 
-		Route::get('/add-Book', [BooksController::class, 'addcategory'])->name('add.category');
-		Route::get('/list-category', [BooksController::class, 'listcategory'])->name('list.category');
-		Route::post('/store-Book', [BooksController::class, 'storeBook'])->name('store.book');
-		 
-		});
+
 
 	// Render Add Books panel
     Route::get('/add-books', array(
@@ -157,26 +152,21 @@ Route::group(['middleware' => ['auth']] , function() {
         'as' => 'students-for-approval',
         'uses' => 'StudentController@renderApprovalStudents'
 	));
-	
-	  // Render students approval panel
-	  Route::get('/settings', array(
-        'as' => 'settings',
-        'uses' => 'StudentController@Setting'
+
+	Route::get('/borrow-for-approval', array(
+        'as' => 'borrow-for-approval',
+        'uses' => 'BooksController@renderApprovalBorrows'
 	));
 	
-	  // Render students approval panel
-	  Route::post('/setting', array(
-        'as' => 'settings.store',
-        'uses' => 'StudentController@StoreSetting'
-    ));
+
 
     // Main students Controlller resource
-	Route::resource('/student', 'StudentController');
+	Route::resource('/member', 'StudentController');
+
+	  // Main Book issues Controlller resource
+	  Route::resource('/borrow', 'BorrowController');
 	
-	Route::post('/studentByattribute', array(
-        'as' => 'studentByattribute',
-        'uses' => 'StudentController@StudentByAttribute'
-    ));
+
 
     // Issue Logs
     Route::get('/issue-return', array(
