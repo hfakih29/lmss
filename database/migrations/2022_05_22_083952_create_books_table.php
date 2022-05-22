@@ -21,7 +21,6 @@ class CreateBooksTable extends Migration
             $table->string('publisher');
             $table->string('edition');
             $table->integer('year')->unsigned();
-            $table->text('description');
             $table->String('callNumber');
             $table->integer('added_by')->unsigned();
 
@@ -39,3 +38,4 @@ class CreateBooksTable extends Migration
         Schema::dropIfExists('books');
     }
 }
+

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBookIssuesTable extends Migration
+class CreateCreditCardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateBookIssuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('book_issues', function (Blueprint $table) {
-            $table->bigIncrements('issue_id');
-            $table->integer('book_id');
-            $table->tinyInteger('available_status')->default(1);
-            $table->integer('added_by')->unsigned();
+        Schema::create('credit_cards', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('Name');
+            $table->string('CardNumber');
+            $table->string('expirationdate');
+            $table->Integer('CVV');
 
             $table->timestamps();
         });
@@ -30,6 +31,6 @@ class CreateBookIssuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('book_issues');
+        Schema::dropIfExists('credit_cards');
     }
 }

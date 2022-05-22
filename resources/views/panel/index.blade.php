@@ -37,7 +37,7 @@
                                     <textarea class="span12" rows="2"></textarea>
                                 </div>
                                 <div class="span3">
-                                    <a class="btn homepage-form-submit " style="background-color:  #9400D3; color:#fff"><i class="icon-search"></i> Search</a>
+                                    <a class="btn homepage-form-submit " style="background-color:  #000000; color:#fff"><i class="icon-search"></i> Search</a>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                             <label class="control-label">Enter Book ID</label>
                             <div class="controls">
                                 <input type="number" placeholder="" class="span9">
-                                <a class="btn homepage-form-submit" style="background-color:  #9400D3; color:#fff"><i class="icon-search"></i> Search</a>
+                                <a class="btn homepage-form-submit" style="background-color:  #000000; color:#fff"><i class="icon-search"></i> Search</a>
                             </div>
                         </div>
                     </form>
@@ -84,7 +84,7 @@
                             <label class="control-label">Enter Student ID</label>
                             <div class="controls">
                                 <input type="text" placeholder="" class="span9">
-                                <a class="btn homepage-form-submit" style="background-color:  #9400D3; color:#fff"><i class="icon-search"></i> Search</a>
+                                <a class="btn homepage-form-submit" style="background-color:  #000000; color:#fff"><i class="icon-search"></i> Search</a>
                             </div>
                         </div>
                     </form>
@@ -93,8 +93,7 @@
             </div>
         </div>
     </div>
-    <input type="hidden" name="" id="branches_list" value="{{ json_encode($branch_list) }}">
-    <input type="hidden" name="" id="student_categories_list" value="{{ json_encode($student_categories_list) }}">
+
     <input type="hidden" name="" id="callNumber_list" value="{{ json_encode($callNumber_list) }}">
     <input type="hidden" id="_token"  data-form-field="token"  value="{{ csrf_token() }}">
 
@@ -104,8 +103,6 @@
 
 @section('custom_bottom_script')
 <script type="text/javascript">
-        var branches_list = $('#branches_list').val(),
-        student_categories_list = $('#student_categories_list').val(),
         callNumber_list = $('#callNumber_list').val(),
         _token = $('#_token').val();
 </script>

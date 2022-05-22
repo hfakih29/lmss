@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Issue extends Model
 {
-    protected $fillable = ['added_by', 'available_status', 'book_id'];
+    protected $fillable = ['added_by', 'available_status', 'book_id','issue_id','title','callNumber'];
 
     public $timestamps = false;
 

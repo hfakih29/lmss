@@ -14,6 +14,7 @@ use App\Models\StudentCategories;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
+use Session;
 use Exception;
 
 class BooksController extends Controller
@@ -32,7 +33,7 @@ class BooksController extends Controller
 	public function index()
 	{
 
-		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','description','book_call_Numbers.callNumber')
+		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','book_call_Numbers.callNumber')
 		->join('book_call_Numbers', 'book_call_Numbers.id', '=', 'books.callNumber')
 			->orderBy('book_id')->get();
 		// dd($book_list);
@@ -92,12 +93,15 @@ class BooksController extends Controller
 				'publisher'		=> $books['publisher'],
 				'year'			=> $books['year'],
 				'edition'		=> $books['edition'],
-				'description' 	=> $books['description'],
 				'callNumber'	=> $books['callNumber'],
+				
 				'added_by'		=> $user_id
 			]);
 			// dd($book_title);
+			
 			$newId = $book_title->book_id;
+			$newCallNumber = $book_title->callNumber;
+			$newtitle = $book_title->title;
 			// dd($newId);
 			if(!$book_title){
 				$db_flag = true;
@@ -107,8 +111,11 @@ class BooksController extends Controller
 				for($i=0; $i<$number_of_issues; $i++){
 
 					$issues = Issue::create([
-						'book_id'	=> $newId,
-						'added_by'	=> $user_id
+						'issue_ID'	=> rand(1234567890,12),
+						'title'			=> $newtitle,
+						'book_id'		=> $newId,
+						'callNumber'	=> $newCallNumber,
+						'added_by'		=> $user_id
 					]);
 
 					if(!$issues){
@@ -133,10 +140,10 @@ class BooksController extends Controller
 		
 		if (!$bookcallnumber) {
 
-			return 'Book Category fail to save!';
+			return 'Book Call Number fail to save!';
 		}else {
 
-			return "Book Category Added successfully to Database";
+			return "Book Call Number Added successfully to Database";
 		}
 	}
 
@@ -149,7 +156,7 @@ class BooksController extends Controller
 	 */
 	public function show($string)
 	{
-		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','description','book_call_Numbers.callNumber')
+		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','book_call_Numbers.callNumber')
 		->join('book_call_Numbers', 'book_call_Numbers.id', '=', 'books.callNumber')
 			->where('title', 'like', '%' . $string . '%')
 			->orWhere('author', 'like', '%' . $string . '%')
@@ -281,7 +288,7 @@ class BooksController extends Controller
 	
 	public function BookByCallNumber($callNumber)
 	{
-		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','description','book_call_Numbers.callNumber')
+		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','book_call_Numbers.callNumber')
 		->join('book_call_Numbers', 'book_call_Numbers.id', '=', 'books.callNumber')
 			->where('books.callNumber', $callNumber)->orderBy('book_id');
 
@@ -313,4 +320,21 @@ class BooksController extends Controller
 		return view('public.book-search')
 			->with('callNumber_list', $db_control->callNumber_list);
     }
+	public function upload(Request $request){	
+		$books = Books::all();
+        if($request->hasFile('image')){
+            $filename = $request->image->getClientOriginalName();
+            $request->image->storeAs('images',$filename,'public');
+            $books['image']=$filename;
+        }
+		
+        return redirect()->back();
+    }
+	public function renderApprovalBorrows(){
+		$db_control = new HomeController;
+		return view('panel.borrowapproval');
+
+	}
+
 }
+

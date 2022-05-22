@@ -85,7 +85,7 @@ class AccountController extends Controller
 			if($userdata) {			
 
 
-				return Redirect::route('account-sign-in')
+				return Redirect::route('account-create')
 					->with('global', 'Your account has been created.');				
 			}
 		}

@@ -50,6 +50,13 @@
                     <i class="menu-icon icon-signout"></i>Issue / Return Books
                 </a>
             </li>
+
+            <li>
+                <a href="{{ URL::route('borrow-for-approval') }}">
+                    <i class="menu-icon icon-filter"></i> All Pending Borrow Requests
+                </a>
+            </li>
+
             <li>
                 <a href="{{ URL::route('currently-issued') }}">
                     <i class="menu-icon icon-list-ul"></i>View all currently issued books  
@@ -57,7 +64,7 @@
             </li>
 	            </ul>
 	          </li>
-              
+
         </ul>
         
         <ul class="widget widget-menu unstyled">

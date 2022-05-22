@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label">Book ID</label>
+                    <label class="control-label">Issue Barcode</label>
                     <div class="controls">
                         <input type="number" id="issue_book_id" data-form-field="book-issue-id" placeholder="Enter the book code here" class="span8">
                     </div>
@@ -41,7 +41,7 @@
         <div class="module-body">
             <form class="form-horizontal row-fluid">
                 <div class="control-group">
-                    <label class="control-label">Book ID</label>
+                    <label class="control-label">Issue Barcode</label>
                     <div class="controls">
                         <input type="number" id="return_book_id" data-form-field="book-issue-id" placeholder="Enter the book code here" class="span8">
                     </div>
