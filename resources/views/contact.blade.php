@@ -1,9 +1,8 @@
-<!doctype html>
-<html lang="en">
-
+<link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-
-  <meta charset="utf-8">
+      <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
 
   <link rel="stylesheet" href="{{asset('fonts/icomoon/style.css')}}">
@@ -17,9 +16,16 @@
   <link rel="stylesheet" href="{{asset('css/index.css')}}">
 
   <title>Library Management System</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Laravel</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 </head>
-<bod>
 <body>
+
+    <body>
   
   <div class="site-mobile-menu site-navbar-target">
     <div class="site-mobile-menu-header">
@@ -65,17 +71,33 @@
   <div class="s003" style="background-image: url('images/main\ bg.jpg');">
       <form>
         <div class="inner-form">
-          <div class="input-field second-wrap">
-            <input id="search" type="text" placeholder="Enter Keywords?" />
-          </div>
-          <div class="input-field third-wrap">
-            <button class="btn-search" type="button">
-              <svg class="svg-inline--fa fa-search fa-w-16" id="search_book_button" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
-              </svg>
-            </button>
-          </div>
+          
         </div>
+        <form action="" method="post" action="{{ route('contact.store') }}">
+            <!-- CROSS Site Request Forgery Protection -->
+            @csrf
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" name="name" id="name">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" name="email" id="email">
+            </div>
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="text" class="form-control" name="phone" id="phone">
+            </div>
+            <div class="form-group">
+                <label>Subject</label>
+                <input type="text" class="form-control" name="subject" id="subject">
+            </div>
+            <div class="form-group">
+                <label>Message</label>
+                <textarea class="form-control" name="message" id="message" rows="4"></textarea>
+            </div>
+            <input type="submit" name="send" value="Submit" class="btn btn-dark btn-block">
+        </form>
         @include('account.message')
 		<div class="row" style="display: none;">
 			<div class="module span12">
@@ -101,6 +123,7 @@
 </div>
       </form>
     </div>
+    
 	@section('custom_bottom_script')
 	<script type="text/javascript">
     var callNumber_list = $('#callNumber_list').val();
@@ -114,6 +137,6 @@
 
 
 
-</body>
 
+</body>
 </html>
