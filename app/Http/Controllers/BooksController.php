@@ -98,7 +98,10 @@ class BooksController extends Controller
 				'added_by'		=> $user_id
 			]);
 			// dd($book_title);
+			
 			$newId = $book_title->book_id;
+			$newCallNumber = $book_title->callNumber;
+			$newtitle = $book_title->title;
 			// dd($newId);
 			if(!$book_title){
 				$db_flag = true;
@@ -108,8 +111,11 @@ class BooksController extends Controller
 				for($i=0; $i<$number_of_issues; $i++){
 
 					$issues = Issue::create([
-						'book_id'	=> $newId,
-						'added_by'	=> $user_id
+						'issue_ID'	=> rand(1234567890,12),
+						'title'			=> $newtitle,
+						'book_id'		=> $newId,
+						'callNumber'	=> $newCallNumber,
+						'added_by'		=> $user_id
 					]);
 
 					if(!$issues){

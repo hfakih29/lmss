@@ -14,8 +14,10 @@ class CreateBookIssuesTable extends Migration
     public function up()
     {
         Schema::create('book_issues', function (Blueprint $table) {
-            $table->bigIncrements('issue_id');
+            $table->string('issue_id');
             $table->integer('book_id');
+            $table->string('title');
+            $table->string('callNumber');
             $table->tinyInteger('available_status')->default(1);
             $table->integer('added_by')->unsigned();
 
