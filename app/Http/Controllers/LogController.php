@@ -38,7 +38,7 @@ class LogController extends Controller
 
 			// to get the name of the student from student id
 			$student = Student::find($student_id);
-			$logs[$i]['student_name'] = $student->first_name . ' ' . $student->last_name;
+			$logs[$i]['student_name'] = $student->firstname . ' ' . $student->lastname;
 
 			// change issue date and return date in human readable format
 			$logs[$i]['issued_at'] = date('d-M', strtotime($logs[$i]['issued_at']));
@@ -61,7 +61,7 @@ class LogController extends Controller
 	public function store(Request $request)
 	{
 		$data = $request->all()['data'];
-		$bookID = $data['bookID'];
+		$issueID = $data['issueID'];
 		$studentID = $data['studentID'];
 		
 		$student = Student::find($studentID);
@@ -81,7 +81,7 @@ class LogController extends Controller
 				
 				
 
-					$book = Issue::where('book_id', $bookID)->where('available_status', '!=', 0)->first();
+					$book = Issue::where('issue_id', $issueID)->where('available_status', '!=', 0)->first();
 
 					if($book == NULL){
 
@@ -96,10 +96,10 @@ class LogController extends Controller
 						} else {
 
 							// book is to be issued
-							DB::transaction( function() use($bookID, $studentID) {
+							DB::transaction( function() use($issueID, $studentID) {
 								$log = new Logs;
 
-								$log->book_issue_id = $bookID;
+								$log->book_issue_id = $issueID;
 								$log->student_id	= $studentID;
 								$log->issue_by		= Auth::id();
 								$log->issued_at		= date('Y-m-d H:i');
@@ -107,9 +107,9 @@ class LogController extends Controller
 
 								$log->save();
 
-								$book = Issue::where('book_id', $bookID)->where('available_status', '!=', 0)->first();
+								$book = Issue::where('issue_id', $issueID)->where('available_status', '!=', 0)->first();
 								// changing the availability status
-								$book_issue_update = Issue::where('book_id', $bookID)->where('issue_id', $book->issue_id)->first();
+								$book_issue_update = Issue::where('issue_id', $issueID)->where('issue_id', $book->issue_id)->first();
 								$book_issue_update->available_status = 0;
 								$book_issue_update->save();
 

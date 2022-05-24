@@ -43,7 +43,7 @@
                 <div class="control-group">
                     <label class="control-label">Issue Barcode</label>
                     <div class="controls">
-                        <input type="number" id="return_book_id" data-form-field="book-issue-id" placeholder="Enter the book code here" class="span8">
+                        <input type="number" id="return_issue_id" data-form-field="book-issue-id" placeholder="Enter the book code here" class="span8">
                     </div>
                 </div>
 

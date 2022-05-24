@@ -8,8 +8,6 @@
     <dd><%= obj.callNumber %></dd>
     <dt>Available Status</dt>
     <dd><%= obj.available_status %></dd>
-    <dt>Date of addition</dt>
-    <dd><%= obj.updated_at %></dd>
 </dl>
 
 <%

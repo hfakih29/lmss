@@ -57,6 +57,7 @@
                                 </button>
                             </div>
                         </div>
+                        <a href="{{ URL::route('account-create') }}">need a new account?</a>
                         @if(Session::has('global'))
 
 				<div class="alert alert-success">

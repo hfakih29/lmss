@@ -29,11 +29,11 @@ function loadResults(){
     });
 }
 
-function issueBook(bookID, studentID, selectedForm){
+function issueBook(issueID, studentID, selectedForm){
     var url = '/issue-log',
         data = {};
 
-    data.bookID = bookID;
+    data.issueID = issueID;
     data.studentID = studentID;
     var _token = $('#_token').val();
     // alert(_token);
@@ -65,8 +65,8 @@ function issueBook(bookID, studentID, selectedForm){
     });
 }
 
-function returnBook(bookID, selectedForm){
-    var url =  '/issue-log/' + bookID + '/edit';
+function returnBook(issueID, selectedForm){
+    var url =  '/issue-log/' + issueID + '/edit';
     $.ajax({
         type : 'GET',
         
@@ -74,7 +74,7 @@ function returnBook(bookID, selectedForm){
         success: function(data) {
             selectedForm.prepend(templates.alert_box( {type: 'success', message: data} ));
             ClearReturn();
-            $('#return_book_id').focus();
+            $('#return_issue_id').focus();
 
         },
         error: function(xhr, status, error){
@@ -91,7 +91,7 @@ function returnBook(bookID, selectedForm){
 }
 
 function ClearReturn(){
-    $('#return_book_id').val('') // if you want the value to be empty you will make the like this
+    $('#return_issue_id').val('') // if you want the value to be empty you will make the like this
 }
 
 function ClearIssueBook(){
@@ -104,23 +104,23 @@ $(document).ready(function(){
     $(document).on("click","#issuebook",function(){
         var selectedForm = $(this).parents('form'),
             studentID = selectedForm.find("input[data-form-field~=student-issue-id]").val(),
-            bookID = selectedForm.find("input[data-form-field~=book-issue-id]").val();
+            issueID = selectedForm.find("input[data-form-field~=book-issue-id]").val();
         
-        if(studentID == "" || bookID == ""){
+        if(studentID == "" || issueID == ""){
             selectedForm.prepend(templates.alert_box( {type: 'danger', message: "Invalid Data"} ));
         } else {
-            issueBook(bookID, studentID, selectedForm);
+            issueBook(issueID, studentID, selectedForm);
         }
     });
 
     $(document).on("click","#returnbook",function(){
         var selectedForm = $(this).parents('form'),
-            bookID = selectedForm.find("input[data-form-field~=book-issue-id]").val();
+            issueID = selectedForm.find("input[data-form-field~=book-issue-id]").val();
         
-        if(bookID == ""){
+        if(issueID == ""){
             selectedForm.prepend(templates.alert_box( {type: 'danger', message: "Invalid Data"} ));
         } else {
-            returnBook(bookID, selectedForm);
+            returnBook(issueID, selectedForm);
         }
     });
     

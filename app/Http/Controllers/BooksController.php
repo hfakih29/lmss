@@ -7,7 +7,7 @@ use App\Models\Books;
 use App\Models\Issue;
 use App\Models\Branch;
 use App\Models\Student;
-use App\Models\Categories;
+use App\Models\CallNumber;
 use Illuminate\Http\Request;
 use App\Models\BookCallNumbers;
 use App\Models\StudentCategories;
@@ -198,7 +198,7 @@ class BooksController extends Controller
 		$issue->book_name = $book->title;
 		$issue->author = $book->author;
 
-		$issue->callNumber = Categories::find($book->callNumber)
+		$issue->callNumber = CallNumber::find($book->callNumber)
 			->callNumber;
 
 		$issue->available_status = (bool)$issue->available_status;
@@ -225,19 +225,8 @@ class BooksController extends Controller
 		unset($student_data->approved);
 		unset($student_data->rejected);
 
-		$student_branch = Branch::find($student_data->branch)
-			->branch;
-		$roll_num = $student_data->roll_num . '/' . $student_branch . '/' . substr($student_data->year, 2, 4);
 
-		unset($student_data->roll_num);
-		unset($student_data->branch);
-		unset($student_data->year);
 
-		$student_data->roll_num = $roll_num;
-
-		$student_data->category = StudentCategories::find($student_data->category)
-			->category;
-		$issue->student = $student_data;
 
 
         return $issue;
@@ -263,7 +252,11 @@ class BooksController extends Controller
 	 */
 	public function destroy($id)
 	{
-		//
+		$Books = Books::find($id);
+		$Books->delete();
+		return response()->json([
+		  'message' => 'Data deleted successfully!'
+		]);
 	}
 
 	public function renderAddBookCallNumber(Type $var = null)
