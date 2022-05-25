@@ -20,33 +20,33 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Unauthenticated group 
+// Unauthenticated group
 Route::group(array('before' => 'guest'), function() {
- 
-	// CSRF protection 
+
+	// CSRF protection
 	Route::group(array('before' => 'csrf'), function() {
 
-		// Create an account (POST) 
+		// Create an account (POST)
 		Route::post('/create', array(
 			'as' => 'account-create-post',
 			'uses' => 'AccountController@postCreate'
 		));
-  
-		// Sign in (POST) 
+
+		// Sign in (POST)
 		Route::post('/sign-in', array(
 			'as' => 'account-sign-in-post',
 			'uses' => 'AccountController@postSignIn'
 		));
-		
 
-		// Sign in (POST) 
+
+		// Sign in (POST)
 		Route::post('/member-registration', array(
 			'as' => 'member-registration-post',
 			'uses' => 'StudentController@postRegistration'
 		));
 
-				
-		
+
+
 			Route::get('/pic', array(
 		'as' 	=> 'account-pic-upload',
 		'uses'	=> 'AccountController@upload'
@@ -54,18 +54,18 @@ Route::group(array('before' => 'guest'), function() {
 
 	});
 
-	// Sign in (GET) 
+	// Sign in (GET)
 	Route::get('/', array(
 		'as' 	=> 'account-sign-in',
 		'uses'	=> 'AccountController@getSignIn'
 	));
 
-	// Create an account (GET) 
+	// Create an account (GET)
 	Route::get('/create', array(
 		'as' 	=> 'account-create',
 		'uses' 	=> 'AccountController@getCreate'
 	));
-	// Create an account (GET) 
+	// Create an account (GET)
 	Route::get('/login', array(
 		'as' 	=> 'account-login',
 		'uses' 	=> 'AccountController@getLogin'
@@ -79,7 +79,7 @@ Route::group(array('before' => 'guest'), function() {
 		'uses' 	=> 'AccountController@getUserProfile'
 	));
 
-	// Student Registeration form 
+	// Student Registeration form
 	Route::get('/member-registration', array(
 		'as' 	=> 'member-registration',
 		'uses' 	=> 'StudentController@getRegistration'
@@ -87,13 +87,13 @@ Route::group(array('before' => 'guest'), function() {
 	Route::post('/borrow-request', array(
 		'as' => 'borrow-request-post',
 		'uses' => 'BorrowController@borrowRequest'
-	));		
+	));
     // Render search books panel
     Route::get('/book', array(
         'as' => 'search-book',
         'uses' => 'BooksController@searchBook'
-    ));    
-	
+    ));
+
 });
 
 // Main books Controlller left public so that it could be used without logging in too
@@ -101,7 +101,7 @@ Route::resource('/books', 'BooksController');
 
 
 
-// Authenticated group 
+// Authenticated group
 // Route::group(array('before' => 'auth'), function() {
 Route::group(['middleware' => ['auth']] , function() {
 
@@ -109,7 +109,7 @@ Route::group(['middleware' => ['auth']] , function() {
 	Route::get('/home',array(
 		'as' 	=> 'home',
 		'uses'	=> 'HomeController@home'
-	));	
+	));
 	Route::post('/pic', array(
 		'as' 	=> 'account-pic-upload',
 		'uses'	=> 'AccountController@upload'
@@ -131,16 +131,16 @@ Route::group(['middleware' => ['auth']] , function() {
         'as' => 'add-book-callNumber',
         'uses' => 'BooksController@renderAddBookCallNumber'
 	));
-	
+
 	Route::post('/bookcallnumber', 'BooksController@BookCallNumberStore')->name('bookcallnumber.store');
-	
+
 
 	// Render All Books panel
     Route::get('/all-books', array(
         'as' => 'all-books',
         'uses' => 'BooksController@renderAllBooks'
 	));
-	
+
 	Route::get('/bookBycallnumber/{callNumber}', array(
         'as' => 'bookBycallnumber',
         'uses' => 'BooksController@BookByCallNumber'
@@ -157,12 +157,20 @@ Route::group(['middleware' => ['auth']] , function() {
         'as' => 'students-for-approval',
         'uses' => 'StudentController@renderApprovalStudents'
 	));
+    Route::get('/admin/user/status/{id}/{status}', array(
+        'as' => 'user.status',
+        'uses' => 'StudentController@userStatus'
+    ));
+    Route::get('book/status/{id}/{status}', array(
+        'as' => 'book.status',
+        'uses' => 'StudentController@bookStatus'
+    ));
 
 	Route::get('/borrow-for-approval', array(
         'as' => 'borrow-for-approval',
         'uses' => 'BooksController@renderApprovalBorrows'
 	));
-	
+
 
 
     // Main students Controlller resource
@@ -170,7 +178,7 @@ Route::group(['middleware' => ['auth']] , function() {
 
 	  // Main Book issues Controlller resource
 	  Route::resource('/borrow', 'BorrowController');
-	
+
 
 
     // Issue Logs
@@ -188,10 +196,12 @@ Route::group(['middleware' => ['auth']] , function() {
     // Main Logs Controlller resource
     Route::resource('/issue-log', 'LogController');
 
-	// Sign out (GET) 
+	// Sign out (GET)
     Route::get('/sign-out', array(
     	'as' => 'account-sign-out',
 		'uses' => 'AccountController@getSignOut'
     ));
+
+
 
 });

@@ -6,10 +6,17 @@
 @section('content')
 <div class="content">
     <div class="module">
+
+        <b></b>
         <div class="module-head">
-            <h3>Members waiting for their approval to access Library</h3>
+            @if($errors->any())
+                <h3 style="color: green">{{$errors->first()}}</h3>
+            @else
+                <h3>Members waiting for their approval to access Library</h3>
+            @endif
+
         </div>
-        
+
             <table class="table table-striped table-bordered table-condensed">
                 <thead>
                     <tr>
@@ -19,10 +26,21 @@
                         <th>Approve</th>
                     </tr>
                 </thead>
-                <tbody id="approval-table">
+                <tbody >
+                @foreach($users as $row )
                     <tr class="text-center">
-                        <td colspan="99"><i class="icon-spinner icon-spin"></i></td>
+                        <td >{{$row->id}}</td>
+                        <td >{{$row->firstname}}</td>
+                        <td >{{$row->lastname}}</td>
+
+                        <td >
+                            @if($row->verification_status==0)
+                            <a href="{{route('user.status',['id'=>$row->id,'status'=>'1'])}}" class="btn btn-primary">Approved</a>
+                            @endif
+                        <a href="{{route('user.status',['id'=>$row->id,'status'=>'2'])}}" class="btn btn-danger">Block</a></td>
+
                     </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

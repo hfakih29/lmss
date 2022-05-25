@@ -81,9 +81,9 @@ class BooksController extends Controller
 	public function store(Request $request)
 	{
 		$books = $request->all();
-		
+
 		// DB::transaction( function() use($books) {
-			// dd($books);
+//			 dd($books['number']);
 			$db_flag = false;
 			$user_id = Auth::id();
 			$book_title = Books::create([
@@ -94,11 +94,12 @@ class BooksController extends Controller
 				'year'			=> $books['year'],
 				'edition'		=> $books['edition'],
 				'callNumber'	=> $books['callNumber'],
-				
+                'number'	=> $books['number'],
+
 				'added_by'		=> $user_id
 			]);
 			// dd($book_title);
-			
+
 			$newId = $book_title->book_id;
 			$newCallNumber = $book_title->callNumber;
 			$newtitle = $book_title->title;
@@ -137,7 +138,7 @@ class BooksController extends Controller
 	public function BookCallNumberStore(Request $request)
 	{
 		$bookcallnumber = BookCallNumbers::create($request->all());
-		
+
 		if (!$bookcallnumber) {
 
 			return 'Book Call Number fail to save!';
@@ -273,12 +274,11 @@ class BooksController extends Controller
     }
 
     public function renderAllBooks() {
-        $db_control = new HomeController();
+       $books = Books::where('status','=',0)->get();
+		return view('panel.allbook',compact('books'));
 
-		return view('panel.allbook')
-            ->with('callNumber_list', $db_control->callNumber_list);
 	}
-	
+
 	public function BookByCallNumber($callNumber)
 	{
 		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','book_call_Numbers.callNumber')
@@ -294,16 +294,16 @@ class BooksController extends Controller
 					'book_id'			=> $id,
 					'available_status'	=> 1
 				);
-	
+
 				$book_list[$i]['total_books'] = Issue::select()
 					->where('book_id','=',$id)
 					->count();
-	
+
 				$book_list[$i]['available'] = Issue::select()
 					->where($conditions)
 					->count();
 			}
-	
+
 			return $book_list;
 	}
 
@@ -313,14 +313,14 @@ class BooksController extends Controller
 		return view('public.book-search')
 			->with('callNumber_list', $db_control->callNumber_list);
     }
-	public function upload(Request $request){	
+	public function upload(Request $request){
 		$books = Books::all();
         if($request->hasFile('image')){
             $filename = $request->image->getClientOriginalName();
             $request->image->storeAs('images',$filename,'public');
             $books['image']=$filename;
         }
-		
+
         return redirect()->back();
     }
 	public function renderApprovalBorrows(){

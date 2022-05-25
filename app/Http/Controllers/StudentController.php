@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\StudentRegisterConfirmation;
+use Mail;
+use App\User;
 use Exception;
 use App\Models\Logs;
 use App\Models\Books;
@@ -19,7 +22,7 @@ class StudentController extends Controller
 {
     public function __construct(){
 
-		
+
 
 	}
 
@@ -83,7 +86,7 @@ class StudentController extends Controller
 			throw new Exception('Invalid Student ID');
 		}
 
-		
+
 
 
 		if($student->rejected == 1){
@@ -172,14 +175,16 @@ class StudentController extends Controller
 
 
 	public function renderStudents(){
-		$db_control = new HomeController;
-		return view('panel.students');
+        $users =  User::where('verification_status','=',1)->get();
+
+        return view('panel.approval',compact('users'));
 
 	}
 
 	public function renderApprovalStudents(){
-		$db_control = new HomeController;
-		return view('panel.approval');
+		$users =  User::where('verification_status','=',0)->get();
+
+		return view('panel.approval',compact('users'));
 
 	}
 
@@ -212,7 +217,7 @@ class StudentController extends Controller
 				'CardNumber'	=> $request->get('cardnumber'),
 				'expirationdate'=> $request->get('expirationdate'),
 				'CVV'			=> $request->get('securitycode'),
-				
+
 			));
 
 			if($CreditCard){
@@ -221,7 +226,7 @@ class StudentController extends Controller
 					'lastname'			=> auth()->user()->lastname,
 					'email'				=> auth()->user()->email,
 					'has_credit_card'	=> '1',
-					
+
 				));
 				return Redirect::route('member-registration')
 					->with('global', 'Your credit card info was added, you will be soon approved!');
@@ -229,5 +234,50 @@ class StudentController extends Controller
 		}
 	}
 
-	
+	public function userStatus($id,$status){
+
+        $user = User::find($id);
+        $user->verification_status = $status;
+        if($status==1){
+            $msg = "Your Registration is Confirm by Admin";
+                }
+        else{
+            $msg = "Your Registration is Reject by Admin";
+        }
+        if($user->update()) {
+            $dataa = array(
+                'fname' => $user->firstname,
+                'lname' => $user->lastname,
+                'msg' => $msg,
+            );
+
+//            Mail::to($user->email)->send(new  StudentRegisterConfirmation($dataa));
+        }
+
+        return redirect()->back()->withErrors(['massage' => $msg]);
+
+
+
+    }
+    public function bookStatus($id,$status){
+
+        $user = Books::find($id);
+        $user->status = $status;
+        if($status==1){
+            $msg = "Your Book is Confirm by Admin";
+        }
+        else{
+            $msg = "Your Book is Reject by Admin";
+        }
+        $user->update();
+
+
+//            Mail::to($user->email)->send(new  StudentRegisterConfirmation($dataa));
+
+
+        return redirect()->back()->withErrors(['massage' => $msg]);
+
+
+
+    }
 }

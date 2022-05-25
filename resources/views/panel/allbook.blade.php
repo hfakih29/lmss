@@ -14,14 +14,14 @@
                 -
                 <small>table class="table table-striped table-bordered table-condensed"</small>
             </p> -->
-            <div class="controls">
-                <select class="" id="callNumber_fill">
-                <option value="none">none</option>
-                    @foreach($callNumber_list as $callNumber)
-                        <option value="{{ $callNumber->id }}">{{ $callNumber->callNumber }}</option>
-                    @endforeach
-                </select>
-            </div>
+{{--            <div class="controls">--}}
+{{--                <select class="" id="callNumber_fill">--}}
+{{--                <option value="none">none</option>--}}
+{{--                    @foreach($callNumber_list as $callNumber)--}}
+{{--                        <option value="{{ $callNumber->id }}">{{ $callNumber->callNumber }}</option>--}}
+{{--                    @endforeach--}}
+{{--                </select>--}}
+{{--            </div>--}}
             <table class="table table-striped table-bordered table-condensed">
                 <thead>
                     <tr>
@@ -32,20 +32,46 @@
                         <th>Publisher</th>
                         <th>Year</th>
                         <th>Edition</th>
-                        <th>CallNumber</th>
                         <th>Available</th>
-                        <th>Total</th>
+                        <th>Status</th>
+
                     </tr>
                 </thead>
                 <tbody id="all-books">
                     <tr class="text-center">
-                        <td colspan="99"> <i class="icon-spinner icon-spin"></i></td>
+                       @foreach($books as $row)
+                           <td>{{$row->id}}</td>
+                            <td>{{$row->title}}</td>
+                            <td>{{$row->author}}</td>
+                            <td>{{$row->ISBN}}</td>
+                            <td>{{$row->publisher}}</td>
+                            <td>{{$row->year}}</td>
+                            <td>{{$row->edition}}</td>
+                        @if($row->status==0)
+                            <th style="color: red">Not Available</th>
+                            @else
+                                <th style="color: green"> Available</th>
+                            @endif
+                            @if($row->status==0)
+                                <th style="color: red">Not Available</th>
+                            @else
+                                <th style="color: green"> Available</th>
+                            @endif
+                            <td >
+                                @if($row->status==0)
+                                    <a href="{{route('book.status',['id'=>$row->id,'status'=>'1'])}}" class="btn btn-primary">Accept</a>
+                                @endif
+                                <a href="{{route('book.status',['id'=>$row->id,'status'=>'2'])}}" class="btn btn-danger">Reject</a></td>
+
+
+
+                        @endforeach
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <input type="hidden" name="" id="callNumber_list" value="{{ json_encode($callNumber_list) }}">
+
 </div>
 @stop
 
