@@ -94,7 +94,7 @@ class BooksController extends Controller
 				'year'			=> $books['year'],
 				'edition'		=> $books['edition'],
 				'callNumber'	=> $books['callNumber'],
-                'number'	=> $books['number'],
+                
 
 				'added_by'		=> $user_id
 			]);
@@ -112,7 +112,7 @@ class BooksController extends Controller
 				for($i=0; $i<$number_of_issues; $i++){
 
 					$issues = Issue::create([
-						'issue_ID'	=> rand(1234567890,12),
+						'issue_id'		=> rand(1234567890,12),
 						'title'			=> $newtitle,
 						'book_id'		=> $newId,
 						'callNumber'	=> $newCallNumber,
@@ -274,15 +274,25 @@ class BooksController extends Controller
     }
 
     public function renderAllBooks() {
-       $books = Books::where('status','=',0)->get();
-		return view('panel.allbook',compact('books'));
+		$db_control = new HomeController();
+		
+		return view('panel.allbook')->with('callNumber_list', $db_control->callNumber_list);
 
 	}
+	public function renderAllBookCopies() {
+		$db_control = new HomeController();
+
+
+		$copies =  Issue::get();
+		return view('panel.allbookcopies',compact('copies'))->with('callNumber_list', $db_control->callNumber_list);
+
+	}
+
 
 	public function BookByCallNumber($callNumber)
 	{
 		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','book_call_Numbers.callNumber')
-		->join('book_call_Numbers', 'book_call_Numbers.id', '=', 'books.callNumber')
+		->join('book_call_Numbers', 'book_call_Numbers.callNumber', '=', 'books.callNumber')
 			->where('books.callNumber', $callNumber)->orderBy('book_id');
 
 			$book_list = $book_list->get();

@@ -1,12 +1,11 @@
 @extends('layout.index')
-@section('custom_top_script')
-@stop
+
 
 @section('content')
 <div class="content">
     <div class="module">
         <div class="module-head">
-            <h3>Books available to Students</h3>
+            <h3>Book copies available to Students</h3>
         </div>
         <div class="module-body">
 <!--             <p>
@@ -20,26 +19,29 @@
                         <option value="{{ $callNumber->callNumber }}">{{ $callNumber->callNumber }}</option>
                     @endforeach
                 </select>
-           </div>
+        </div>
             <table class="table table-striped table-bordered table-condensed">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Book Title</th>
-                        <th>Author</th>
-                        <th>ISBN</th>
-                        <th>Publisher</th>
-                        <th>Year</th>
-                        <th>Edition</th>
-                        <th>CallNumber</th>
-                        <th>Available</th>
-                        <th>Total</th>
+                        <th>Copy Barcode</th>
+                        <th>Book ID</th>
+                        <th>Title</th>
+                        <th>callNumber</th>
+                        <th>available status</th>
+
 
                     </tr>
                 </thead>
-                <tbody id="all-books">
+                <tbody >
+                @foreach($copies as $row )
                     <tr class="text-center">
-                    </tr>
+                        <td >{{$row->issue_id}}</td>
+                        <td >{{$row->book_id}}</td>
+                        <td >{{$row->title}}</td>
+                        <td >{{$row->callNumber}}</td>
+                        <td >{{$row->available_status}}</td>
+</tr>
+@endforeach
                 </tbody>
             </table>
         </div>
@@ -51,9 +53,5 @@
 @section('custom_bottom_script')
 <script type="text/javascript">
     var callNumber_list = $('#callNumber_list').val();
-</script>
-<script type="text/javascript" src="{{asset('static/custom/js/script.addbook.js') }}"></script>
-<script type="text/template" id="allbooks_show">
-    @include('underscore.allbooks_show')
 </script>
 @stop

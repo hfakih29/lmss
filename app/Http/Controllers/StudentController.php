@@ -17,6 +17,7 @@ use App\Models\StudentCategories;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class StudentController extends Controller
 {
@@ -175,16 +176,15 @@ class StudentController extends Controller
 
 
 	public function renderStudents(){
-        $users =  User::where('verification_status','=',1)->get();
+        $students =  Student::where('Approved','=',1)->get();
 
-        return view('panel.approval',compact('users'));
+        return view('panel.students',compact('students'));
 
 	}
 
 	public function renderApprovalStudents(){
-		$users =  User::where('verification_status','=',0)->get();
 
-		return view('panel.approval',compact('users'));
+		return view('panel.approval');
 
 	}
 
@@ -234,27 +234,10 @@ class StudentController extends Controller
 		}
 	}
 
-	public function userStatus($id,$status){
+	public function userStatus($id){
+		DB::table('students')->where('member_id',$id)->delete();
 
-        $user = User::find($id);
-        $user->verification_status = $status;
-        if($status==1){
-            $msg = "Your Registration is Confirm by Admin";
-                }
-        else{
-            $msg = "Your Registration is Reject by Admin";
-        }
-        if($user->update()) {
-            $dataa = array(
-                'fname' => $user->firstname,
-                'lname' => $user->lastname,
-                'msg' => $msg,
-            );
-
-//            Mail::to($user->email)->send(new  StudentRegisterConfirmation($dataa));
-        }
-
-        return redirect()->back()->withErrors(['massage' => $msg]);
+        return redirect()->back();
 
 
 

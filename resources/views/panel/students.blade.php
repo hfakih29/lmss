@@ -20,10 +20,21 @@
                         <th>Books Issued</th>
                     </tr>
                 </thead>
-                <tbody id="students-table">
+                <tbody >
+                <tbody >
+                @foreach($students as $row )
                     <tr class="text-center">
-                        <td colspan="99">Loading...</td>
+                        <td >{{$row->member_id}}</td>
+                        <td >{{$row->firstname}}</td>
+                        <td >{{$row->lastname}}</td>
+                        <td >{{$row->email}}</td>
+                        <td >{{$row->books_issued}}</td>
+
+                        <td >
+                        <a href="{{route('user.status',['id'=>$row->member_id])}}" class="btn btn-danger">Block</a></td>
                     </tr>
+                @endforeach
+                </tbody>
                 </tbody>
             </table>
         </div>

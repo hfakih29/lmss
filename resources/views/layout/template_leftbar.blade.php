@@ -31,6 +31,11 @@
                 </a>
             </li>
             <li>
+                <a href="{{ URL::route('all-book-copies') }}">
+                    <i class="menu-icon icon-th-list"></i>All Books copies in Library
+                </a>
+            </li>
+            <li>
                 <a href="{{ URL::route('add-book-callNumber') }}">
                     <i class="menu-icon icon-folder-open-alt"></i>Add Book Call Number
                 </a>

@@ -26,21 +26,10 @@
                         <th>Approve</th>
                     </tr>
                 </thead>
-                <tbody >
-                @foreach($users as $row )
+                <tbody id="approval-table">
                     <tr class="text-center">
-                        <td >{{$row->id}}</td>
-                        <td >{{$row->firstname}}</td>
-                        <td >{{$row->lastname}}</td>
-
-                        <td >
-                            @if($row->verification_status==0)
-                            <a href="{{route('user.status',['id'=>$row->id,'status'=>'1'])}}" class="btn btn-primary">Approved</a>
-                            @endif
-                        <a href="{{route('user.status',['id'=>$row->id,'status'=>'2'])}}" class="btn btn-danger">Block</a></td>
-
+                        <td colspan="99"><i class="icon-spinner icon-spin"></i></td>
                     </tr>
-                @endforeach
                 </tbody>
             </table>
         </div>

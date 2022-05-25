@@ -140,6 +140,10 @@ Route::group(['middleware' => ['auth']] , function() {
         'as' => 'all-books',
         'uses' => 'BooksController@renderAllBooks'
 	));
+	Route::get('/all-book-copies', array(
+        'as' => 'all-book-copies',
+        'uses' => 'BooksController@renderAllBookCopies'
+	));
 
 	Route::get('/bookBycallnumber/{callNumber}', array(
         'as' => 'bookBycallnumber',
@@ -157,11 +161,11 @@ Route::group(['middleware' => ['auth']] , function() {
         'as' => 'students-for-approval',
         'uses' => 'StudentController@renderApprovalStudents'
 	));
-    Route::get('/admin/user/status/{id}/{status}', array(
+    Route::get('/admin/user/status/{id}', array(
         'as' => 'user.status',
         'uses' => 'StudentController@userStatus'
     ));
-    Route::get('book/status/{id}/{status}', array(
+    Route::get('book/status/{id}', array(
         'as' => 'book.status',
         'uses' => 'StudentController@bookStatus'
     ));
