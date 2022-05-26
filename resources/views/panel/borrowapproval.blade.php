@@ -9,34 +9,36 @@
         <div class="module-head">
             <h3>Borrow requests pending for approval</h3>
         </div>
-        
+         <div class="module-body">
             <table class="table table-striped table-bordered table-condensed">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Request ID</th>
                         <th>First Name</th>
                         <th>Last Name</th>
-                        <th>Book title</th>
-                        <th>ISBN</th>
+                        <th>Email</th>
+                        <th>Copy ID</th>
+                        <th>Book title</th>                       
                         <th>Call Number</th>
                         <th>Approve</th>
                     </tr>
                 </thead>
-                <tbody id="borrowapproval-table">
-                    <tr class="text-center">
-                        <td colspan="99"><i class="icon-spinner icon-spin"></i></td>
+                <tbody id="borrowapproval-table" >
+                @foreach($requests as $row )
+                   <tr class="text-center">
+                    
+                       
+                   @include('underscore.approvalborrow_show')
+                    
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
+        <input type="hidden" id="_token"  data-form-field="token"  value="{{ csrf_token() }}">
     </div>
-    <input type="hidden" id="_token"  data-form-field="token"  value="{{ csrf_token() }}">
-
-</div>
-
-@stop
-
-@section('custom_bottom_script')
+  
+</div>@section('custom_bottom_script')
 <script type="text/javascript">
     var _token = $('#_token').val();
 </script>
@@ -45,3 +47,7 @@
     @include('underscore.approvalborrow_show')
 </script>
 @stop
+
+
+@stop
+

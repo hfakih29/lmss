@@ -28,7 +28,7 @@ function loadResults(){
 
 
 
-function approveBorrow(issueID, flag, btn) {
+function approveBorrow(requestID, flag, btn) {
     var module_body = btn.parents('.module-body'),
         table = $('#borrowapproval-table');
 
@@ -41,7 +41,7 @@ function approveBorrow(issueID, flag, btn) {
             flag : flag,
             _token:_token
         },
-        url : '/borrow/' + issueID,
+        url : '/borrow/' + requestID,
         success: function(data) {
             module_body.prepend(templates.alert_box( {type: 'success', message: data} ));
             loadResults();
@@ -61,15 +61,15 @@ function approveBorrow(issueID, flag, btn) {
 $(document).ready(function(){
 
 
-    $(document).on("click",".issue-status",function(){
+    $(document).on("click",".borrow-status",function(){
         var selectedRow = $(this).parents('tr'),
-            issueID = selectedRow.data('issue-id')
+            requestID = selectedRow.data('request-id')
             flag = $(this).data('status');
         
-        console.log(issueID);
+        console.log(requestID);
         console.log(flag);
         
-        approveBorrow(issueID, flag, $(this));
+        approveBorrow(requestID, flag, $(this));
     });
     
     loadResults();

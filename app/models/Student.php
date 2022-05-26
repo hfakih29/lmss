@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-    protected $fillable = array('firstname','lastname','email','approved','has_credit_card');
+    protected $fillable = array('firstname','lastname','email','approved','has_credit_card','approved','rejected');
 
     public $timestamps = false;
 

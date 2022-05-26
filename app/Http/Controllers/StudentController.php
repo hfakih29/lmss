@@ -9,11 +9,9 @@ use Exception;
 use App\Models\Logs;
 use App\Models\Books;
 use App\Models\Issue;
-use App\Models\Branch;
 use App\Models\Student;
 use App\Models\CreditCard;
 use Illuminate\Http\Request;
-use App\Models\StudentCategories;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
@@ -234,33 +232,4 @@ class StudentController extends Controller
 		}
 	}
 
-	public function userStatus($id){
-		DB::table('students')->where('member_id',$id)->delete();
-
-        return redirect()->back();
-
-
-
-    }
-    public function bookStatus($id,$status){
-
-        $user = Books::find($id);
-        $user->status = $status;
-        if($status==1){
-            $msg = "Your Book is Confirm by Admin";
-        }
-        else{
-            $msg = "Your Book is Reject by Admin";
-        }
-        $user->update();
-
-
-//            Mail::to($user->email)->send(new  StudentRegisterConfirmation($dataa));
-
-
-        return redirect()->back()->withErrors(['massage' => $msg]);
-
-
-
-    }
 }

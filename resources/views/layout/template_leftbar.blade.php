@@ -67,6 +67,7 @@
                     <i class="menu-icon icon-list-ul"></i>View all currently issued books  
                 </a>
             </li>
+
 	            </ul>
 	          </li>
 

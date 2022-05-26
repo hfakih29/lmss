@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Books;
 use Exception;
 
 class AccountController extends Controller
@@ -118,7 +119,8 @@ class AccountController extends Controller
 		return view('account.login');
 	}
 	public function getUserHome() {
-		return view('account.UserHome');
+		$books =  Books::get();
+		return view('account.UserHome',compact('books'));
 	}
 	
 

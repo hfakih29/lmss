@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Logs;
 use App\Models\Books;
 use App\Models\Issue;
-use App\Models\Branch;
 use App\Models\Student;
 use App\Models\CallNumber;
+use App\Models\Requests;
 use Illuminate\Http\Request;
 use App\Models\BookCallNumbers;
-use App\Models\StudentCategories;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
@@ -161,6 +160,7 @@ class BooksController extends Controller
 		->join('book_call_Numbers', 'book_call_Numbers.id', '=', 'books.callNumber')
 			->where('title', 'like', '%' . $string . '%')
 			->orWhere('author', 'like', '%' . $string . '%')
+			->orWhere('year', 'like', '%' . $string . '%')
 			->orderBy('book_id');
 
 		$book_list = $book_list->get();
@@ -179,6 +179,33 @@ class BooksController extends Controller
 
         return $book_list;
 	}
+	public function usersearch(Request $request)
+	{  
+		$string=$request->get('string');
+		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','book_call_Numbers.callNumber')
+		->join('book_call_Numbers', 'book_call_Numbers.id', '=', 'books.callNumber')
+			->where('title', 'like', '%' . $string . '%')
+			->orWhere('author', 'like', '%' . $string . '%')
+			->orWhere('year', 'like', '%' . $string . '%')
+			->orderBy('book_id');
+
+		$book_list = $book_list->get();
+
+		foreach($book_list as $book){
+			$conditions = array(
+				'book_id'			=> $book->book_id,
+				'available_status'	=> 1
+			);
+
+			$count = Issue::where($conditions)
+				->count();
+
+			$book->avaliability = ($count > 0) ? true : false;
+		}
+
+        return $book_list;
+	}
+
 
 
 	/**
@@ -288,6 +315,12 @@ class BooksController extends Controller
 
 	}
 
+	public function renderApprovalBorrows(){
+		$db_control = new HomeController;
+		$requests =  Requests::get();
+		return view('panel.borrowapproval',compact('requests'));
+
+	}
 
 	public function BookByCallNumber($callNumber)
 	{
@@ -333,11 +366,6 @@ class BooksController extends Controller
 
         return redirect()->back();
     }
-	public function renderApprovalBorrows(){
-		$db_control = new HomeController;
-		return view('panel.borrowapproval');
-
-	}
 
 }
 

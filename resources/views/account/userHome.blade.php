@@ -100,7 +100,12 @@
                         <th>Available</th>
 		                    </tr>
 		                </thead>
-		                <tbody id="book-results"></tbody>
+		                <tbody id="book-results">
+
+                    @foreach($books as $row )
+                    @include('underscore.search_bookMember')
+                    @endforeach
+                    </tbody>
 		            </table>
 				</div>
 			</div>

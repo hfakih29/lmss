@@ -7,7 +7,6 @@ use App\Models\Books;
 use App\Models\Issue;
 use App\Models\Student;
 use Illuminate\Http\Request;
-use App\Models\StudentCategories;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Exception;
@@ -17,8 +16,7 @@ class LogController extends Controller
     public function index()
 	{
 
-		$logs = Logs::select('id','book_issue_id','student_id','issued_at')
-			->where('return_time', '=', 0)
+		$logs = Logs::select('id','book_issue_id','student_id','issued_at','return_time')
 			->orderBy('issued_at', 'DESC');
 
 			// dd($logs);
@@ -42,12 +40,10 @@ class LogController extends Controller
 
 			// change issue date and return date in human readable format
 			$logs[$i]['issued_at'] = date('d-M', strtotime($logs[$i]['issued_at']));
-			if ($issue->return_time == 0) {
-				$logs[$i]['return_time'] =  '<p class="color:red">Pending</p>';
-			}else {
+			if ($issue->return_time != 0) {
 				$logs[$i]['return_time'] = date('d-M', strtotime($logs[$i]['return_time']));
+				
 			}
-
 		}
 
         return $logs;
@@ -192,7 +188,6 @@ class LogController extends Controller
     public function renderLogs() {
         return view('panel.logs');
     }
-
     public function renderIssueReturn() {
         return view('panel.issue-return');
     }

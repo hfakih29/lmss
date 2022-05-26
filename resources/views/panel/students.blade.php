@@ -17,7 +17,7 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email ID</th>
-                        <th>Books Issued</th>
+                        <th>Total Books Issued</th>
                     </tr>
                 </thead>
                 <tbody >
@@ -30,9 +30,7 @@
                         <td >{{$row->email}}</td>
                         <td >{{$row->books_issued}}</td>
 
-                        <td >
-                        <a href="{{route('user.status',['id'=>$row->member_id])}}" class="btn btn-danger">Block</a></td>
-                    </tr>
+                    
                 @endforeach
                 </tbody>
                 </tbody>

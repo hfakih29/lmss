@@ -165,11 +165,18 @@ Route::group(['middleware' => ['auth']] , function() {
         'as' => 'user.status',
         'uses' => 'StudentController@userStatus'
     ));
-    Route::get('book/status/{id}', array(
-        'as' => 'book.status',
-        'uses' => 'StudentController@bookStatus'
+	Route::get('/borrow/approved/{id}', array(
+        'as' => 'borrow.approved',
+        'uses' => 'BorrowController@borrowapproved'
     ));
-
+	Route::get('/borrow/rejected/{id}', array(
+        'as' => 'borrow.rejected',
+        'uses' => 'BorrowController@borrowrejected'
+    ));
+	Route::get('/borrowrequest/{id}', array(
+        'as' => 'borrow.request',
+        'uses' => 'BorrowController@borrowRequest'
+    ));
 	Route::get('/borrow-for-approval', array(
         'as' => 'borrow-for-approval',
         'uses' => 'BooksController@renderApprovalBorrows'
@@ -196,6 +203,7 @@ Route::group(['middleware' => ['auth']] , function() {
         'as' => 'currently-issued',
         'uses' => 'LogController@renderLogs'
     ));
+
 
     // Main Logs Controlller resource
     Route::resource('/issue-log', 'LogController');
