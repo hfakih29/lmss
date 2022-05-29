@@ -60,7 +60,7 @@
                     <div class="controls">
                         <select tabindex="1" id="callNumber" data-form-field="callNumber" data-placeholder="Select Call Number.." class="span8">
                             @foreach($callNumber_list as $callNumber)
-                                <option value="{{ $callNumber->id }}">{{ $callNumber->callNumber }}</option>
+                                <option value="{{ $callNumber->callNumber }}">{{ $callNumber->callNumber }}</option>
                             @endforeach
                         </select>
                     </div>

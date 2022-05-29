@@ -6,7 +6,6 @@
 <td >{{$row->publisher}}</td>
 <td >{{$row->year}}</td>
 <td >{{$row->edition}}</td>
-<td >{{$row->callNumber}}</td>
 <td><%= obj.avaliability %>
 <a href="{{route('borrow.request',['id'=>$row->book_id])}}" class="btn btn-success ">Request for borrow</a></td>
 

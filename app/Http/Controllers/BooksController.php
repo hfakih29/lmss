@@ -33,7 +33,7 @@ class BooksController extends Controller
 	{
 
 		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','book_call_Numbers.callNumber')
-		->join('book_call_Numbers', 'book_call_Numbers.id', '=', 'books.callNumber')
+		->join('book_call_Numbers', 'book_call_Numbers.callNumber', '=', 'books.callNumber')
 			->orderBy('book_id')->get();
 		// dd($book_list);
 		// $this->filterQuery($book_list);
@@ -157,7 +157,7 @@ class BooksController extends Controller
 	public function show($string)
 	{
 		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','book_call_Numbers.callNumber')
-		->join('book_call_Numbers', 'book_call_Numbers.id', '=', 'books.callNumber')
+		->join('book_call_Numbers', 'book_call_Numbers.callNumber', '=', 'books.callNumber')
 			->where('title', 'like', '%' . $string . '%')
 			->orWhere('author', 'like', '%' . $string . '%')
 			->orWhere('year', 'like', '%' . $string . '%')
@@ -183,7 +183,7 @@ class BooksController extends Controller
 	{  
 		$string=$request->get('string');
 		$book_list = Books::select('book_id','title','author','ISBN','publisher','year','edition','book_call_Numbers.callNumber')
-		->join('book_call_Numbers', 'book_call_Numbers.id', '=', 'books.callNumber')
+		->join('book_call_Numbers', 'book_call_Numbers.callNumber', '=', 'books.callNumber')
 			->where('title', 'like', '%' . $string . '%')
 			->orWhere('author', 'like', '%' . $string . '%')
 			->orWhere('year', 'like', '%' . $string . '%')
@@ -282,6 +282,13 @@ class BooksController extends Controller
 	{
 		$Books = Books::find($id);
 		$Books->delete();
+		return response()->json([
+		  'message' => 'Data deleted successfully!'
+		]);
+	}
+	public function copyDelete($id)
+	{
+		DB::table('book_issues')->where('issue_id', $id)->delete();
 		return response()->json([
 		  'message' => 'Data deleted successfully!'
 		]);

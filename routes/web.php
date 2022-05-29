@@ -177,6 +177,10 @@ Route::group(['middleware' => ['auth']] , function() {
         'as' => 'borrow.request',
         'uses' => 'BorrowController@borrowRequest'
     ));
+	Route::get('/bookcopydelete/{id}', array(
+        'as' => 'copy.delete',
+        'uses' => 'BooksController@copyDelete'
+    ));
 	Route::get('/borrow-for-approval', array(
         'as' => 'borrow-for-approval',
         'uses' => 'BooksController@renderApprovalBorrows'

@@ -34,13 +34,18 @@
                 </thead>
                 <tbody >
                 @foreach($copies as $row )
-                    <tr class="text-center">
+                    <tr class="text-center">                        
                         <td >{{$row->issue_id}}</td>
                         <td >{{$row->book_id}}</td>
                         <td >{{$row->title}}</td>
                         <td >{{$row->callNumber}}</td>
-                        <td >{{$row->available_status}}</td>
-</tr>
+                        @if($row->available_status ==1)
+                        <td ><a class="btn btn-success ">Available</td></a>
+                        @else
+                        <td><a class="btn btn-danger ">Not Available</td></a>
+                        @endif
+                       
+</tr>                       
 @endforeach
                 </tbody>
             </table>
