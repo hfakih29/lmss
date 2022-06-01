@@ -101,18 +101,9 @@
 		                <tbody id="book-results">
 
                     @foreach($books as $row )
-                    <tr>
-	                  <td >{{$row->title}}</td>
-                    <td >{{$row->author}}</td>
-                    <td >{{$row->ISBN}}</td>
-                    <td >{{$row->publisher}}</td>
-                    <td >{{$row->year}}</td>
-                    <td >{{$row->edition}}</td>
-                    <td><%= obj.avaliability %>
-<a href="{{route('borrow.request',['id'=>$row->book_id])}}" class="btn btn-success ">Request for borrow</a></td>
-
-</tr> 
+                    @include('underscore.search_bookMember')
                     @endforeach
+                    </tbody>
 		            </table>
 				</div>
 			</div>
@@ -129,19 +120,7 @@
 <script type="text/javascript" src="{{  asset('static/custom/js/script.searchbook.js') }}"></script>
 
 <script type="text/template" id="search_book">
-@foreach($books as $row )
-                    <tr>
-	                  <td >{{$row->title}}</td>
-                    <td >{{$row->author}}</td>
-                    <td >{{$row->ISBN}}</td>
-                    <td >{{$row->publisher}}</td>
-                    <td >{{$row->year}}</td>
-                    <td >{{$row->edition}}</td>
-                    <td><%= obj.avaliability %>
-<a href="{{route('borrow.request',['id'=>$row->book_id])}}" class="btn btn-success ">Request for borrow</a></td>
-
-</tr> 
-                    @endforeach
+    @include('underscore.search_bookMember')
 </script>
 @stop
 
