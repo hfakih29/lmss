@@ -42,16 +42,6 @@
         <div class="site-logo col-6"><a href="">Library Management System
           </a></div>
 
-        <nav class="mx-auto site-navigation">
-          <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-            <li><a href="" class="nav-link active">Home</a></li>
-            <li><a href="about.html">test</a></li>
-            <li><a href="contact">Contact</a></li>
-            <li class="d-lg-none"><a href="{{ URL::route('account-create') }}"><span class="mr-2">+</span> Register</a></li>
-            <li class="d-lg-none"><a href="{{ URL::route('account-login') }}">Log In</a></li>
-          </ul>
-
-        </nav>
         
 
         <div class="right-cta-menu text-right d-flex aligin-items-center col-6">

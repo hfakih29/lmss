@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\StudentRegisterConfirmation;
 use Mail;
 use App\User;
 use Exception;
