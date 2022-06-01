@@ -35,8 +35,6 @@
 
         <nav class="mx-auto site-navigation">
           <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">            
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
             <li><a href="{{ URL::route('member-registration') }}">Apply as member</a></li>          
         </nav>
         				<div class="ml-auto nav-user dropdown  "><a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -194,6 +192,28 @@
 		</div>
 		
 	</div>
+    <div class="row" style="display: none;">
+			<div class="module span12">
+				<div class="module-body">
+		            <table class="table table-striped table-bordered table-condensed">
+		                <thead>
+		                    <tr>
+						<th>Book ID</th>
+                        <th>Book Title</th>
+						<th>ISBN</th>
+                        <th>Author</th>                       
+                        <th>Publisher</th>
+						<th>Edition</th>
+                        <th>Year</th>
+                        <th>call number</th>
+                        <th>Available</th>
+		                    </tr>
+		                </thead>
+		                <tbody id="book-results"></tbody>
+		            </table>
+				</div>
+			</div>
+		</div>
 
 
 <script src="{{asset('static/scripts/jquery-1.9.1.min.js') }}" type="text/javascript"></script>
